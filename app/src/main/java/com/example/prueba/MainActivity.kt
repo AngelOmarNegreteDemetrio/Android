@@ -4,6 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -18,17 +21,34 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            PruebaTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+     //Layouts
+            Column {
+                Text(text = "First Row")
+                Text(text = "Second Row")
+                Text(text = "Third Row")
+
+                Row{
+                    Text(text = "Text1")
+                    Text(text = "Text2")
+                    Text(text = "Text3")
+                    Text(text = "Text2")
                 }
+                Box{
+                    Text(text = "Larabel 1")
+                    Text(text = "Larabel 2")
+
+                }
+                Greeting(name ="World")
+            }
+            }
             }
         }
+
+    private fun column(function: () -> Unit) {
+
     }
-}
+
+
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
