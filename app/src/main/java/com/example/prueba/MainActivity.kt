@@ -19,10 +19,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,6 +35,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.VerticalAlignmentLine
+import androidx.compose.ui.modifier.modifierLocalMapOf
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -214,9 +220,9 @@ fun Content1() {
             contentScale = ContentScale.Crop
         )
         Text(
-            stringResource(R.string.Text_Card),
-            TextAlign = TextAlign.Justify,
-            LineHight = 18.sp,
+            text = stringResource(R.string.Text_Card),
+            textAlign = TextAlign.Justify,
+            lineHeight = 18.sp,
             modifier = Modifier
                 .padding(10.dp)
         )
@@ -231,6 +237,11 @@ fun Content1() {
                 .fillMaxWidth()
                 .padding(5.dp)
         ){
+            Row{
+                Column {
+
+                }
+            }
             Text(text="this is title",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
@@ -246,14 +257,65 @@ fun Content1() {
                 contentScale = ContentScale.Crop
             )
             Text(
-                stringResource(R.string.Text_Card),
-                TextAlign=TextAlign.Justify,
-                LineHight =18.sp,
+                text = stringResource(R.string.Text_Card),
+                textAlign = TextAlign.Justify,
+                lineHeight = 18.sp,
                 modifier = Modifier
                     .padding(10.dp)
             )
             }
 }
+@Preview(showBackground = true)
+@Composable
+fun BoxExample1(){
+    Box(
+        modifier = Modifier
+            .background(Color.DarkGray)
+            .fillMaxWidth()
+            .padding(5.dp)
+    ){
+        Image(painterResource(R.drawable.android),
+            contentDescription = "Android Head Logo",
+            contentScale = ContentScale.FillBounds
+        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(0.dp, 150.dp),
+            horizontalArrangement = Arrangement.Center
+
+            ){
+            Icon(
+                Icons.Filled.AccountCircle,
+                contentDescription = "Icon Account"
+            )
+            Text(text = "Text",
+
+            )
+        }
+
+
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun BoxExample2(){
+    Box(modifier = Modifier
+        .background(Color.Magenta)
+        .padding(5.dp)
+        .size(250.dp)
+    ){
+        Text(text = "TopStart",Modifier.align(Alignment.TopStart))
+        Text(text = "TopEnd",Modifier.align(Alignment.TopEnd))
+        Text(text = "CenterStart",Modifier.align(Alignment.CenterStart))
+        Text(text = "Center",Modifier.align(Alignment.Center))
+        Text(text = "CenterEnd",Modifier.align(Alignment.CenterEnd))
+        Text(text = "BottomStart",Modifier.align(Alignment.BottomStart))
+        Text(text = "BottomEnd",Modifier.align(Alignment.BottomEnd))
+    }
+}
+
 fun clickAction(){
     println("Column Clicked")
 
