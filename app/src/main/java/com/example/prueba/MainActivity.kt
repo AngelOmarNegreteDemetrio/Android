@@ -228,43 +228,45 @@ fun Content1() {
         )
     }
 }
-    @Preview(showBackground = true)
-    @Composable
-            fun Content2(){
-        Card(
-            modifier = Modifier
-                .background(Color.LightGray)
-                .fillMaxWidth()
-                .padding(5.dp)
-        ){
-            Row{
-                Column {
 
-                }
-            }
-            Text(text="this is title",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .padding(10.dp)
-            )
+@Preview(showBackground = true)
+@Composable
+fun Content2(){
+    Card(
+        modifier = Modifier
+            .background(Color.LightGray)
+            .fillMaxWidth()
+            .padding(5.dp)
+    ){
+        Row{
             Image(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp),
-                painter = painterResource(id =R.drawable.android),
-                contentDescription ="Android Logo",
+                    .width(width = 150.dp)
+                    .height(height = 150.dp),
+                painter = painterResource(id = R.drawable.android),
+                contentDescription = "Android Logo",
                 contentScale = ContentScale.Crop
             )
-            Text(
-                text = stringResource(R.string.Text_Card),
-                textAlign = TextAlign.Justify,
-                lineHeight = 18.sp,
-                modifier = Modifier
-                    .padding(10.dp)
-            )
+
+            Column {
+                Text(text="This is a title",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .padding(10.dp)
+                )
+                Text(stringResource(R.string.Text_Card),
+                    textAlign = TextAlign.Justify,
+                    maxLines = 7,
+                    lineHeight = 16.sp,
+                    modifier = Modifier
+                        .padding(10.dp)
+                )
             }
+        }
+    }
 }
+
 @Preview(showBackground = true)
 @Composable
 fun BoxExample1(){
