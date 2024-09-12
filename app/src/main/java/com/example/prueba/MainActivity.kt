@@ -213,8 +213,7 @@ fun Content1() {
         )
         Image(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp),
+                .fillMaxWidth(),
             painter = painterResource(id = R.drawable.android),
             contentDescription = "Android Logo",
             contentScale = ContentScale.Crop
@@ -282,21 +281,18 @@ fun BoxExample1(){
         )
         Row(
             modifier = Modifier
+                .background(Color.Red)
                 .fillMaxWidth()
-                .padding(0.dp, 150.dp),
+                .padding(0.dp,0.dp),
             horizontalArrangement = Arrangement.Center
-
             ){
             Icon(
                 Icons.Filled.AccountCircle,
                 contentDescription = "Icon Account"
             )
-            Text(text = "Text",
-
+            Text(text = "Text"
             )
         }
-
-
     }
 }
 
