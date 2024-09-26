@@ -19,7 +19,7 @@ fun MenuScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = "This is the Menu Screen")
-        Button(onClick = { navController.navigate("home") }) {
+        Button(onClick = { navController.navigate("component") }) {
             Text("Go to Home")
         }
     }
