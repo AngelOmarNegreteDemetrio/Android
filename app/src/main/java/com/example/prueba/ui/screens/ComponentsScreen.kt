@@ -266,7 +266,6 @@ fun FloatingButtons() {
     }
 }
 
-@Preview(showBackground = true)
 @Composable
 fun Chips() {
     Column(
