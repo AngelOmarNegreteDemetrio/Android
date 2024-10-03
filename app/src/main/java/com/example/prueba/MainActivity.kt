@@ -79,7 +79,7 @@ import com.example.prueba.ui.screens.MenuScreen
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //enableEdgeToEdge()
+        enableEdgeToEdge()//abarca el 100% de la pantalla
         setContent {
             ComposeMultiScreenApp()
             /*
