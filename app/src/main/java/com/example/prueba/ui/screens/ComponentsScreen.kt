@@ -229,11 +229,12 @@ fun ComponentsScreen(navController: NavController) {
                         }
                     }
                 )
+
                 NavigationDrawerItem(
                     label = { Text(text = "TimePickers") },
                     selected = false,
                     onClick = {
-                        component = "TimePikers"
+                        component = "TimePickers"
                         scope.launch {
                             drawerState.apply {
                                 close()
@@ -241,6 +242,7 @@ fun ComponentsScreen(navController: NavController) {
                         }
                     }
                 )
+
                 NavigationDrawerItem(
                         label = { Text(text = "SnackBars") },
                 selected = false,
