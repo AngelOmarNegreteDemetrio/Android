@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 //import androidx.compose.foundation.layout.FlowRowScopeInstance.align
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -12,6 +13,10 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Add
@@ -22,6 +27,11 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.outlined.Build
+import androidx.compose.material.icons.outlined.Call
+import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
@@ -75,6 +85,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -82,6 +93,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import androidx.navigation.NavController
+import com.example.prueba.R
+import com.example.prueba.data.model.PostModel
 import kotlinx.coroutines.launch
 import org.w3c.dom.Text
 import java.sql.Date
@@ -808,5 +821,106 @@ fun Bars(){
 
         Icon(Icons.Filled.Settings, contentDescription = "", tint = Color.White)
     }
+        var post= arrayOf(
+            PostModel(1,"Tittle 1","Text 1"),
+            PostModel(2,"Tittle 2","Text 2"),
+            PostModel(3,"Tittle 3","Text 3"),
+            PostModel(4,"Tittle 4","Text 4")
+        )
+        Column(
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(10.dp,90.dp,10.dp,50.dp)
+                .fillMaxSize()
+
+        )
+        {
+            Post(post)
+        }
+
+
+        Row(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+                .height(65.dp)
+                .background(Color.Black)
+                .padding(2.dp,5.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ){
+         Column {
+             IconButton(onClick = {}, Modifier.size(30.dp)) {
+                 Icon(
+                     Icons.Outlined.Home,
+                     contentDescription = "",
+                     tint = Color.White,
+                     modifier = Modifier.fillMaxSize()
+                     )
+             }
+             Text(text = "Home", color = Color.White)
+         }
+            Column {
+                IconButton(onClick = {}, Modifier.size(30.dp)) {
+                    Icon(
+                        Icons.Outlined.Person,
+                        contentDescription = "",
+                        tint = Color.White,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+                Text(text = "Login", color = Color.White)
+            }
+            Column {
+                IconButton(onClick = {}, Modifier.size(30.dp)) {
+                    Icon(
+                        Icons.Outlined.Call,
+                        contentDescription = "",
+                        tint = Color.White,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+                Text(text = "call", color = Color.White)
+            }
+            Column {
+                IconButton(onClick = {}, Modifier.size(30.dp)) {
+                    Icon(
+                        Icons.Outlined.Build,
+                        contentDescription = "",
+                        tint = Color.White,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+                Text(text = "Tools", color = Color.White)
+            }
+            Column {
+                IconButton(onClick = {}, Modifier.size(30.dp)) {
+                    Icon(
+                        Icons.Outlined.Email,
+                        contentDescription = "",
+                        tint = Color.White,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+                Text(text = "Mail", color = Color.White)
+            }
+        }
+    }
+}
+
+@Composable
+fun Post(arrayPosts:Array<PostModel>){
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+    ){
+        items(arrayPosts) { post->
+            Text(
+                text = post.text,
+                color = Color.White,
+                fontSize = 16.sp
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            HorizontalDivider(thickness =2.dp)
+        }
     }
 }
