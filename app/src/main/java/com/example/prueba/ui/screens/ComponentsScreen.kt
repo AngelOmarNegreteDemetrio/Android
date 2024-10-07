@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
@@ -80,6 +81,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -93,7 +95,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.example.prueba.R
+import com.example.prueba.data.model.MenuModel
 import com.example.prueba.data.model.PostModel
 import kotlinx.coroutines.launch
 import org.w3c.dom.Text
@@ -104,7 +108,21 @@ import java.util.Locale
 
 @Composable
 fun ComponentsScreen(navController: NavController) {
-    var component by remember { mutableStateOf("")}
+    val menuOptions= arrayOf(
+        MenuModel(1,"Buttons","Buttons",Icons.Filled.AccountBox),
+        MenuModel(2,"Floating Buttons","FloatingButtons", Icons.Filled.DateRange),
+        MenuModel(3,"Chips","Chips",Icons.Filled.AccountBox),
+        MenuModel(4,"Progress","Progress", Icons.Filled.DateRange),
+        MenuModel(5,"Sliders","Sliders",Icons.Filled.AccountBox),
+        MenuModel(6,"Switches","Switches", Icons.Filled.DateRange),
+        MenuModel(7,"Badges","Badges",Icons.Filled.AccountBox),
+        MenuModel(8,"Date Pickers","DatePickers", Icons.Filled.DateRange),
+        MenuModel(9,"Time Pickers","TimePickers",Icons.Filled.AccountBox),
+        MenuModel(10,"Snack Bars","SnackBars", Icons.Filled.DateRange),
+        MenuModel(11,"Alert Dialogs","AlertDialogs",Icons.Filled.AccountBox),
+        MenuModel(12,"Bars","Bars", Icons.Filled.DateRange),
+        )
+    var component by rememberSaveable { mutableStateOf("")}
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     ModalNavigationDrawer(
@@ -114,32 +132,24 @@ fun ComponentsScreen(navController: NavController) {
             ModalDrawerSheet {
                 Text(text = "Menu", modifier = Modifier.padding(16.dp))
                 HorizontalDivider()
-                //Content1
-                NavigationDrawerItem(
-                    label = { Text(text = "Content 1") },
-                    selected = false,
-                    onClick = {
-                        component = "Content1"
-                        scope.launch {
-                            drawerState.apply {
-                                close()
+                LazyColumn {
+                    items(menuOptions) { item ->
+                        NavigationDrawerItem(
+                            icon = { Icon(item.icon, contentDescription = "") },
+                            label = {Text(text =item.title) },
+                            selected = false,
+                            onClick = {
+                                component = item.option
+                                scope.launch {
+                                    drawerState.apply {
+                                        close()
+                                    }
+                                }
                             }
-                        }
+                        )
                     }
-                )
-                //Content2
-                NavigationDrawerItem(
-                    label = { Text(text = "Content 2") },
-                    selected = false,
-                    onClick = {
-                        component = "Content2"
-                        scope.launch {
-                            drawerState.apply {
-                                close()
-                            }
-                        }
-                    }
-                )
+                }
+/*
                 //Buttons
                 NavigationDrawerItem(
                     label = { Text(text = "Buttons") },
@@ -292,7 +302,7 @@ fun ComponentsScreen(navController: NavController) {
                         }
                     }
                 )
-
+*/
             }
         }
 
