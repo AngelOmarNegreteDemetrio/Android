@@ -1,4 +1,5 @@
 package com.example.prueba.ui.screens
+import android.icu.text.ListFormatter.Width
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -76,6 +77,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TimeInput
 import androidx.compose.material3.TimePicker
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.contentColorFor
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberDrawerState
@@ -101,10 +103,13 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.window.core.layout.WindowHeightSizeClass
+import androidx.window.core.layout.WindowWidthSizeClass
 import com.example.prueba.R
 import com.example.prueba.data.model.MenuModel
 import com.example.prueba.data.model.PostModel
 import com.example.prueba.ui.components.PostCard
+import com.example.prueba.ui.components.PostCardCompact
 import kotlinx.coroutines.launch
 import org.w3c.dom.Text
 import java.sql.Date
@@ -127,6 +132,7 @@ fun ComponentsScreen(navController: NavController) {
         MenuModel(10,"Snack Bars","SnackBars", Icons.Filled.DateRange),
         MenuModel(11,"Alert Dialogs","AlertDialogs",Icons.Filled.AccountBox),
         MenuModel(12,"Bars","Bars", Icons.Filled.DateRange),
+        MenuModel(13," Adaptive","Adaptive", Icons.Filled.DateRange),
         )
     var component by rememberSaveable { mutableStateOf("")}
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -357,6 +363,9 @@ fun ComponentsScreen(navController: NavController) {
                 }
                 "Bars" -> {
                     Bars()
+                }
+                "Adaptive" -> {
+                    Adaptive()
                 }
             }
         }
@@ -759,8 +768,7 @@ fun SnackBars() {
     ) {
         val snackState= remember { SnackbarHostState() }
         val snackScope = rememberCoroutineScope()
-
-                SnackbarHost(hostState = snackState, Modifier)
+        SnackbarHost(hostState = snackState, Modifier)
 
         fun launchSnackBar(){
             snackScope.launch { snackState.showSnackbar("the message was sent") }
@@ -812,7 +820,6 @@ fun AlertDialogs() {
         }
     }
     }
-@Preview(showBackground = true)
 @Composable
 private fun Bars(){
     Box(modifier = Modifier
@@ -933,13 +940,21 @@ private fun Bars(){
 }
 
 @Composable
-fun Post(arrayPosts:Array<PostModel>){
+fun Post(arrayPosts:Array<PostModel>, adaptive:String){
     // lazyColumn y LazyRow
-    LazyRow (
+    LazyColumn (
         modifier = Modifier
             .fillMaxSize()
     ){
         items(arrayPosts) { post->
+            when(adaptive){
+                "PhoneP" ->{
+                    PostCardCompact(post.id,post.title,post.text,post.image)
+            }
+                "Phonel" ->{
+                    PostCardCompact(post.id,post.title,post.text,post.image)
+                }
+            }
            PostCard(post.id,post.title,post.text,post.image)
         }
     }
@@ -956,5 +971,44 @@ fun PostGrid(arrayPosts:Array<PostModel>){
             PostCard(post.id,post.title,post.text,post.image)
         }
     }
+
+}
+@Composable
+@Preview(showBackground = true, device = "spec:id=reference_tablet,shape=Normal,width=1280,height=800,unit=dp,dpi=240")
+fun Adaptive(){
+    var WindowsSize =currentWindowAdaptiveInfo().windowSizeClass
+var height= currentWindowAdaptiveInfo().windowSizeClass.windowHeightSizeClass
+    var width= currentWindowAdaptiveInfo().windowSizeClass.windowWidthSizeClass
+
+    //Compact Heigth < 600dp phone portrait
+    //medium width >=600dp < 840dp tablets portrait
+    //Expanded width> 840dp Tablet Landscape
+
+    //compact width < 480dp phone Landscape
+    //medium height >=480dp <900dp Tablet Landscape or Phone portrait
+    //Expanded Height > 900dp Tablet In portrait
+
+    val post= arrayOf(
+        PostModel(1,"Title 1","Text 1",painterResource(R.drawable.android)),
+        PostModel(2,"Title 2","Text 2", painterResource(R.drawable.android)),
+        PostModel(3,"Title 3","Text 3", painterResource(R.drawable.android)),
+        PostModel(4,"Title 4","Text 4", painterResource(R.drawable.android)),
+        PostModel(5,"Title 5","Text 5",painterResource(R.drawable.android)),
+        PostModel(6,"Title 6","Text 6", painterResource(R.drawable.android)),
+        PostModel(7,"Title 7","Text 7", painterResource(R.drawable.android)),
+        PostModel(8,"Title 8","Text 8", painterResource(R.drawable.android)),
+        PostModel(9,"Title 9","Text 9", painterResource(R.drawable.android)),
+        PostModel(10,"Title 10","Text 10", painterResource(R.drawable.android)),
+    )
+        if(width==WindowWidthSizeClass.COMPACT){
+            Post(post,"PhoneP")
+        } else if(height== WindowHeightSizeClass.COMPACT){
+            Post(post,"PhoneL")
+        } else{
+            Post(post,"PhoneL")
+        }
+
+    //Text(text =WindowsSize.toString())
+
 
 }
