@@ -1,4 +1,5 @@
 package com.example.prueba.ui.screens
+
 import android.icu.text.ListFormatter.Width
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -119,22 +120,22 @@ import java.util.Locale
 
 @Composable
 fun ComponentsScreen(navController: NavController) {
-    val menuOptions= arrayOf(
-        MenuModel(1,"Buttons","Buttons",Icons.Filled.AccountBox),
-        MenuModel(2,"Floating Buttons","FloatingButtons", Icons.Filled.DateRange),
-        MenuModel(3,"Chips","Chips",Icons.Filled.AccountBox),
-        MenuModel(4,"Progress","Progress", Icons.Filled.DateRange),
-        MenuModel(5,"Sliders","Sliders",Icons.Filled.AccountBox),
-        MenuModel(6,"Switches","Switches", Icons.Filled.DateRange),
-        MenuModel(7,"Badges","Badges",Icons.Filled.AccountBox),
-        MenuModel(8,"Date Pickers","DatePickers", Icons.Filled.DateRange),
-        MenuModel(9,"Time Pickers","TimePickers",Icons.Filled.AccountBox),
-        MenuModel(10,"Snack Bars","SnackBars", Icons.Filled.DateRange),
-        MenuModel(11,"Alert Dialogs","AlertDialogs",Icons.Filled.AccountBox),
-        MenuModel(12,"Bars","Bars", Icons.Filled.DateRange),
-        MenuModel(13," Adaptive","Adaptive", Icons.Filled.DateRange),
-        )
-    var component by rememberSaveable { mutableStateOf("")}
+    val menuOptions = arrayOf(
+        MenuModel(1, "Buttons", "Buttons", Icons.Filled.AccountBox),
+        MenuModel(2, "Floating Buttons", "FloatingButtons", Icons.Filled.DateRange),
+        MenuModel(3, "Chips", "Chips", Icons.Filled.AccountBox),
+        MenuModel(4, "Progress", "Progress", Icons.Filled.DateRange),
+        MenuModel(5, "Sliders", "Sliders", Icons.Filled.AccountBox),
+        MenuModel(6, "Switches", "Switches", Icons.Filled.DateRange),
+        MenuModel(7, "Badges", "Badges", Icons.Filled.AccountBox),
+        MenuModel(8, "Date Pickers", "DatePickers", Icons.Filled.DateRange),
+        MenuModel(9, "Time Pickers", "TimePickers", Icons.Filled.AccountBox),
+        MenuModel(10, "Snack Bars", "SnackBars", Icons.Filled.DateRange),
+        MenuModel(11, "Alert Dialogs", "AlertDialogs", Icons.Filled.AccountBox),
+        MenuModel(12, "Bars", "Bars", Icons.Filled.DateRange),
+        MenuModel(13, " Adaptive", "Adaptive", Icons.Filled.DateRange),
+    )
+    var component by rememberSaveable { mutableStateOf("") }
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     ModalNavigationDrawer(
@@ -148,7 +149,7 @@ fun ComponentsScreen(navController: NavController) {
                     items(menuOptions) { item ->
                         NavigationDrawerItem(
                             icon = { Icon(item.icon, contentDescription = "") },
-                            label = {Text(text =item.title) },
+                            label = { Text(text = item.title) },
                             selected = false,
                             onClick = {
                                 component = item.option
@@ -161,209 +162,223 @@ fun ComponentsScreen(navController: NavController) {
                         )
                     }
                 }
-/*
-                //Buttons
-                NavigationDrawerItem(
-                    label = { Text(text = "Buttons") },
-                    selected = false,
-                    onClick = {
-                        component = "Buttons"
-                        scope.launch {
-                            drawerState.apply {
-                                close()
-                            }
-                        }
-                    }
-                )
-                //FloatingButtons
-                NavigationDrawerItem(
-                    label = { Text(text = "FloatingButtons") },
-                    selected = false,
-                    onClick = {
-                        component = "FloatingButtons"
-                        scope.launch {
-                            drawerState.apply {
-                                close()
-                            }
-                        }
-                    }
-                )
-                //Chips
-                NavigationDrawerItem(
-                    label = { Text(text = "Chips") },
-                    selected = false,
-                    onClick = {
-                        component = "Chips"
-                        scope.launch {
-                            drawerState.apply {
-                                close()
-                            }
-                        }
-                    }
-                )
-                //Progress
-                NavigationDrawerItem(
-                    label = { Text(text = "Progress") },
-                    selected = false,
-                    onClick = {
-                        component = "Progress"
-                        scope.launch {
-                            drawerState.apply {
-                                close()
-                            }
-                        }
-                    }
-                )
-                //Slider
-                NavigationDrawerItem(
-                    label = { Text(text = "Sliders") },
-                    selected = false,
-                    onClick = {
-                        component = "Sliders"
-                        scope.launch {
-                            drawerState.apply {
-                                close()
-                            }
-                        }
-                    }
-                )
-                //Switches
-                NavigationDrawerItem(
-                    label = { Text(text = "Switches") },
-                    selected = false,
-                    onClick = {
-                        component = "Switches"
-                        scope.launch {
-                            drawerState.apply {
-                                close()
-                            }
-                        }
-                    }
-                )
-                NavigationDrawerItem(
-                    label = { Text(text = "Badges") },
-                    selected = false,
-                    onClick = {
-                        component = "Badges"
-                        scope.launch {
-                            drawerState.apply {
-                                close()
-                            }
-                        }
-                    }
-                )
-                NavigationDrawerItem(
-                    label = { Text(text = "DatePickers") },
-                    selected = false,
-                    onClick = {
-                        component = "DatePickers"
-                        scope.launch {
-                            drawerState.apply {
-                                close()
-                            }
-                        }
-                    }
-                )
+                /*
+                                //Buttons
+                                NavigationDrawerItem(
+                                    label = { Text(text = "Buttons") },
+                                    selected = false,
+                                    onClick = {
+                                        component = "Buttons"
+                                        scope.launch {
+                                            drawerState.apply {
+                                                close()
+                                            }
+                                        }
+                                    }
+                                )
+                                //FloatingButtons
+                                NavigationDrawerItem(
+                                    label = { Text(text = "FloatingButtons") },
+                                    selected = false,
+                                    onClick = {
+                                        component = "FloatingButtons"
+                                        scope.launch {
+                                            drawerState.apply {
+                                                close()
+                                            }
+                                        }
+                                    }
+                                )
+                                //Chips
+                                NavigationDrawerItem(
+                                    label = { Text(text = "Chips") },
+                                    selected = false,
+                                    onClick = {
+                                        component = "Chips"
+                                        scope.launch {
+                                            drawerState.apply {
+                                                close()
+                                            }
+                                        }
+                                    }
+                                )
+                                //Progress
+                                NavigationDrawerItem(
+                                    label = { Text(text = "Progress") },
+                                    selected = false,
+                                    onClick = {
+                                        component = "Progress"
+                                        scope.launch {
+                                            drawerState.apply {
+                                                close()
+                                            }
+                                        }
+                                    }
+                                )
+                                //Slider
+                                NavigationDrawerItem(
+                                    label = { Text(text = "Sliders") },
+                                    selected = false,
+                                    onClick = {
+                                        component = "Sliders"
+                                        scope.launch {
+                                            drawerState.apply {
+                                                close()
+                                            }
+                                        }
+                                    }
+                                )
+                                //Switches
+                                NavigationDrawerItem(
+                                    label = { Text(text = "Switches") },
+                                    selected = false,
+                                    onClick = {
+                                        component = "Switches"
+                                        scope.launch {
+                                            drawerState.apply {
+                                                close()
+                                            }
+                                        }
+                                    }
+                                )
+                                NavigationDrawerItem(
+                                    label = { Text(text = "Badges") },
+                                    selected = false,
+                                    onClick = {
+                                        component = "Badges"
+                                        scope.launch {
+                                            drawerState.apply {
+                                                close()
+                                            }
+                                        }
+                                    }
+                                )
+                                NavigationDrawerItem(
+                                    label = { Text(text = "DatePickers") },
+                                    selected = false,
+                                    onClick = {
+                                        component = "DatePickers"
+                                        scope.launch {
+                                            drawerState.apply {
+                                                close()
+                                            }
+                                        }
+                                    }
+                                )
 
-                NavigationDrawerItem(
-                    label = { Text(text = "TimePickers") },
-                    selected = false,
-                    onClick = {
-                        component = "TimePickers"
-                        scope.launch {
-                            drawerState.apply {
-                                close()
-                            }
-                        }
-                    }
-                )
+                                NavigationDrawerItem(
+                                    label = { Text(text = "TimePickers") },
+                                    selected = false,
+                                    onClick = {
+                                        component = "TimePickers"
+                                        scope.launch {
+                                            drawerState.apply {
+                                                close()
+                                            }
+                                        }
+                                    }
+                                )
 
-                NavigationDrawerItem(
-                        label = { Text(text = "SnackBars") },
-                selected = false,
-                onClick = {
-                    component = "SnackBars"
-                    scope.launch {
-                        drawerState.apply {
-                            close()
-                        }
-                    }
-                }
-                )
-                NavigationDrawerItem(
-                    label = { Text(text = "AlertDialogs") },
-                    selected = false,
-                    onClick = {
-                        component = "AlertDialogs"
-                        scope.launch {
-                            drawerState.apply {
-                                close()
-                            }
-                        }
-                    }
-                )
-                NavigationDrawerItem(
-                    label = { Text(text = "Bars") },
-                    selected = false,
-                    onClick = {
-                        component = "Bars"
-                        scope.launch {
-                            drawerState.apply {
-                                close()
-                            }
-                        }
-                    }
-                )
-*/
+                                NavigationDrawerItem(
+                                        label = { Text(text = "SnackBars") },
+                                selected = false,
+                                onClick = {
+                                    component = "SnackBars"
+                                    scope.launch {
+                                        drawerState.apply {
+                                            close()
+                                        }
+                                    }
+                                }
+                                )
+                                NavigationDrawerItem(
+                                    label = { Text(text = "AlertDialogs") },
+                                    selected = false,
+                                    onClick = {
+                                        component = "AlertDialogs"
+                                        scope.launch {
+                                            drawerState.apply {
+                                                close()
+                                            }
+                                        }
+                                    }
+                                )
+                                NavigationDrawerItem(
+                                    label = { Text(text = "Bars") },
+                                    selected = false,
+                                    onClick = {
+                                        component = "Bars"
+                                        scope.launch {
+                                            drawerState.apply {
+                                                close()
+                                            }
+                                        }
+                                    }
+                                )
+                */
             }
         }
 
     ) {
         // Screen Content
         Column {
-            when(component){
+            when (component) {
                 "Content1" -> {
                     Content1()
                 }
+
                 "Content2" -> {
                     Content2()
                 }
+
                 "Buttons" -> {
                     Buttons()
                 }
+
                 "FloatingButtons" -> {
                     FloatingButtons()
                 }
+
                 "Chips" -> {
                     Chips()
                 }
+
                 "Progress" -> {
                     Progress()
                 }
+
                 "Sliders" -> {
                     Sliders()
                 }
+
                 "Switches" -> {
                     Switches()
                 }
+
                 "Badges" -> {
                     Badges()
                 }
+
                 "DatePickers" -> {
                     DatePickers()
                 }
+
                 "TimePickers" -> {
                     TimePickers()
                 }
+
                 "SnackBars" -> {
                     SnackBars()
                 }
+
                 "AlertDialogs" -> {
                     AlertDialogs()
                 }
+
                 "Bars" -> {
                     Bars()
                 }
+
                 "Adaptive" -> {
                     Adaptive()
                 }
@@ -373,36 +388,36 @@ fun ComponentsScreen(navController: NavController) {
 }
 
 @Composable
-fun Content1(){
-    Text(text= "Content 1")
+fun Content1() {
+    Text(text = "Content 1")
 }
 
 @Composable
-fun Content2(){
-    Text(text= "Content 2")
+fun Content2() {
+    Text(text = "Content 2")
 }
 
 @Composable
-fun Buttons(){
-    Column (
+fun Buttons() {
+    Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
             .fillMaxSize()
-    ){
-        Button(onClick ={}){
+    ) {
+        Button(onClick = {}) {
             Text("Filled")
         }
-        FilledTonalButton(onClick ={}) {
+        FilledTonalButton(onClick = {}) {
             Text("Tonal")
         }
-        OutlinedButton(onClick ={}) {
+        OutlinedButton(onClick = {}) {
             Text("Outlined")
         }
-        ElevatedButton(onClick ={}) {
+        ElevatedButton(onClick = {}) {
             Text("Elevated")
         }
-        TextButton(onClick ={}) {
+        TextButton(onClick = {}) {
             Text("Text")
         }
     }
@@ -417,18 +432,18 @@ fun FloatingButtons() {
             .fillMaxSize()
     ) {
         FloatingActionButton(onClick = {}) {
-            Icon(Icons.Filled.Add,"")
+            Icon(Icons.Filled.Add, "")
         }
         SmallFloatingActionButton(onClick = {}) {
-            Icon(Icons.Filled.Add,"")
+            Icon(Icons.Filled.Add, "")
         }
         LargeFloatingActionButton(onClick = {}) {
-            Icon(Icons.Filled.Add,"")
+            Icon(Icons.Filled.Add, "")
         }
         ExtendedFloatingActionButton(
             onClick = {},
-            icon = {Icon(Icons.Filled.Add,"")},
-            text = {Text(text = "Extended FAB")}
+            icon = { Icon(Icons.Filled.Add, "") },
+            text = { Text(text = "Extended FAB") }
         )
     }
 }
@@ -443,18 +458,20 @@ fun Chips() {
     ) {
         AssistChip(
             onClick = {},
-            label = {Text("Assist Chip")},
+            label = { Text("Assist Chip") },
             leadingIcon = {
-                Icon(Icons.Filled.AccountBox,"",
-                    Modifier.size(AssistChipDefaults.IconSize))
+                Icon(
+                    Icons.Filled.AccountBox, "",
+                    Modifier.size(AssistChipDefaults.IconSize)
+                )
             }
         )
         var selected by remember { mutableStateOf(false) }
         FilterChip(
             selected = selected,
-            onClick = {selected = !selected},
-            label = { Text("Filter Chip")},
-            leadingIcon = if (selected){
+            onClick = { selected = !selected },
+            label = { Text("Filter Chip") },
+            leadingIcon = if (selected) {
                 {
                     Icon(
                         Icons.Filled.AccountBox, "",
@@ -465,59 +482,60 @@ fun Chips() {
                 null
             }
         )
-            InputChipExample("Dismiss", {})
+        InputChipExample("Dismiss", {})
     }
 }
+
 @Composable
 fun InputChipExample(
-    text:String,
-    onDismiss:()->Unit
-){
+    text: String,
+    onDismiss: () -> Unit
+) {
     var enabled by remember { mutableStateOf(true) }
-    if(!enabled) return
+    if (!enabled) return
 
     InputChip(
-        label={ Text(text) },
+        label = { Text(text) },
         selected = enabled,
         onClick = {
             onDismiss()
             enabled = !enabled
         },
-        avatar={
+        avatar = {
             Icon(
                 Icons.Filled.Person,
-                contentDescription="",
+                contentDescription = "",
                 Modifier.size(InputChipDefaults.AvatarSize)
             )
         },
-                trailingIcon= {
-                    Icon(
-                        Icons.Filled.Person,
-                        contentDescription = "",
-                        Modifier.size(InputChipDefaults.AvatarSize)
+        trailingIcon = {
+            Icon(
+                Icons.Filled.Person,
+                contentDescription = "",
+                Modifier.size(InputChipDefaults.AvatarSize)
 
-                    )
-                }
-    )
-                }
-
-        @Composable
-        fun Progress() {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier
-                    .fillMaxSize()
             )
-            {
-                LinearProgressIndicator(
-                    modifier = Modifier.fillMaxWidth()
-                )
-                CircularProgressIndicator(
-                    modifier = Modifier.width(64.dp)
-                )
-            }
         }
+    )
+}
+
+@Composable
+fun Progress() {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceEvenly,
+        modifier = Modifier
+            .fillMaxSize()
+    )
+    {
+        LinearProgressIndicator(
+            modifier = Modifier.fillMaxWidth()
+        )
+        CircularProgressIndicator(
+            modifier = Modifier.width(64.dp)
+        )
+    }
+}
 
 @Composable
 fun Sliders() {
@@ -526,19 +544,19 @@ fun Sliders() {
         verticalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
             .fillMaxSize()
-    ){
+    ) {
         var sliderPosition by remember { mutableStateOf(50f) }
         Column {
             Slider(
                 value = sliderPosition,
-                onValueChange ={sliderPosition= it},
+                onValueChange = { sliderPosition = it },
                 steps = 10,
                 valueRange = 0f..100f
             )
             Text(
-                textAlign =TextAlign.Center,
-                modifier= Modifier.fillMaxWidth(),
-                text =sliderPosition.toString()
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth(),
+                text = sliderPosition.toString()
             )
         }
     }
@@ -551,7 +569,7 @@ fun Switches() {
         verticalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
             .fillMaxSize()
-    ){
+    ) {
         var checked by remember { mutableStateOf(true) }
         Switch(
             checked = checked,
@@ -565,25 +583,26 @@ fun Switches() {
             onCheckedChange = {
                 checked = it
             },
-            thumbContent = if (checked2){
+            thumbContent = if (checked2) {
                 {
                     Icon(
                         Icons.Filled.Check,
-                        contentDescription="",
+                        contentDescription = "",
                         Modifier.size(InputChipDefaults.AvatarSize)
                     )
                 }
-                } else{
-                    null
-                }
-            )
+            } else {
+                null
+            }
+        )
         var checked3 by remember { mutableStateOf(true) }
         Checkbox(
             checked = checked3,
-            onCheckedChange = {checked3=it}
+            onCheckedChange = { checked3 = it }
         )
     }
 }
+
 @Composable
 fun Badges() {
     Column(
@@ -591,32 +610,32 @@ fun Badges() {
         verticalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
             .fillMaxSize()
-    ){
-      var itemCount by remember { mutableStateOf(0) }
-          BadgedBox(
-              badge = {
-                  if (itemCount > 0) {
-                      Badge(
-                          containerColor = Color.Red,
-                          contentColor = Color.White
-                      ){
-                         Text("itemCount")
-                      }
-                   }
-              }
-          ) {
-              Icon(
-                  imageVector = Icons.Filled.ShoppingCart,
-                  contentDescription=""
-              )
-          }
+    ) {
+        var itemCount by remember { mutableStateOf(0) }
+        BadgedBox(
+            badge = {
+                if (itemCount > 0) {
+                    Badge(
+                        containerColor = Color.Red,
+                        contentColor = Color.White
+                    ) {
+                        Text("itemCount")
+                    }
+                }
+            }
+        ) {
+            Icon(
+                imageVector = Icons.Filled.ShoppingCart,
+                contentDescription = ""
+            )
+        }
         Button(
-            onClick ={ itemCount++}
-        ){
+            onClick = { itemCount++ }
+        ) {
             Text("add item")
         }
-      }
     }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -681,7 +700,6 @@ fun convertMillisToDate(millis: Long): String {
     val formatter = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
     return formatter.format(Date(millis))
 }
-
 
 
 @Composable
@@ -766,11 +784,11 @@ fun SnackBars() {
         modifier = Modifier
             .fillMaxSize()
     ) {
-        val snackState= remember { SnackbarHostState() }
+        val snackState = remember { SnackbarHostState() }
         val snackScope = rememberCoroutineScope()
         SnackbarHost(hostState = snackState, Modifier)
 
-        fun launchSnackBar(){
+        fun launchSnackBar() {
             snackScope.launch { snackState.showSnackbar("the message was sent") }
         }
         Button(::launchSnackBar) {
@@ -790,82 +808,84 @@ fun AlertDialogs() {
         var showAlertDialog by remember { mutableStateOf(false) }
         var selecteOption by remember { mutableStateOf("") }
 
-        if (showAlertDialog){
+        if (showAlertDialog) {
             AlertDialog(
                 icon = { Icon(Icons.Filled.Warning, contentDescription = "") },
-                title ={ Text(text = "confirm deletion") },
-                text ={ Text(text = "Are you sure you want to delete the file") },
-             onDismissRequest={},
-                confirmButton={
+                title = { Text(text = "confirm deletion") },
+                text = { Text(text = "Are you sure you want to delete the file") },
+                onDismissRequest = {},
+                confirmButton = {
                     TextButton(
-                        onClick={
-                            selecteOption="Confirm"
-                            showAlertDialog=false
-                        }
-                    ) {Text(text = "Confirm") }
-                },
-                dismissButton ={
-                    TextButton (
                         onClick = {
-                            selecteOption="Dismiss"
-                            showAlertDialog=false
+                            selecteOption = "Confirm"
+                            showAlertDialog = false
                         }
-                    ){ Text(text = "Dismiss") }
+                    ) { Text(text = "Confirm") }
+                },
+                dismissButton = {
+                    TextButton(
+                        onClick = {
+                            selecteOption = "Dismiss"
+                            showAlertDialog = false
+                        }
+                    ) { Text(text = "Dismiss") }
                 }
             )
         }
         Text(selecteOption)
-        Button(onClick = {showAlertDialog= true}){
+        Button(onClick = { showAlertDialog = true }) {
             Text("show alert dialog")
         }
     }
-    }
+}
+
 @Composable
-private fun Bars(){
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(Color.DarkGray)
-    ){
-    Row (
+private fun Bars() {
+    Box(
         modifier = Modifier
-            .align(Alignment.TopCenter)
-            .fillMaxWidth()
-            .background(Color.Black)
-            .padding(10.dp, 50.dp, 10.dp, 10.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
-    )
-    {
-        Icon(Icons.Filled.Menu, contentDescription = "", tint = Color.White)
-        Text(
-            text = "App title",
-            color = Color.White,
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp
+            .fillMaxSize()
+            .background(Color.DarkGray)
+    ) {
+        Row(
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .fillMaxWidth()
+                .background(Color.Black)
+                .padding(10.dp, 50.dp, 10.dp, 10.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        )
+        {
+            Icon(Icons.Filled.Menu, contentDescription = "", tint = Color.White)
+            Text(
+                text = "App title",
+                color = Color.White,
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp
             )
 
-        Icon(Icons.Filled.Settings, contentDescription = "", tint = Color.White)
-    }
-        val post= arrayOf(
-            PostModel(1,"Title 1","Text 1",painterResource(R.drawable.android)),
-            PostModel(2,"Title 2","Text 2", painterResource(R.drawable.android)),
-            PostModel(3,"Title 3","Text 3", painterResource(R.drawable.android)),
-            PostModel(4,"Title 4","Text 4", painterResource(R.drawable.android)),
-            PostModel(5,"Title 5","Text 5",painterResource(R.drawable.android)),
-            PostModel(6,"Title 6","Text 6", painterResource(R.drawable.android)),
-            PostModel(7,"Title 7","Text 7", painterResource(R.drawable.android)),
-            PostModel(8,"Title 8","Text 8", painterResource(R.drawable.android)),
-            PostModel(9,"Title 9","Text 9", painterResource(R.drawable.android)),
-            PostModel(10,"Title 10","Text 10", painterResource(R.drawable.android))
+            Icon(Icons.Filled.Settings, contentDescription = "", tint = Color.White)
+        }
+        val post = arrayOf(
+            PostModel(1, "Title 1", "Text 1", painterResource(R.drawable.android)),
+            PostModel(2, "Title 2", "Text 2", painterResource(R.drawable.android)),
+            PostModel(3, "Title 3", "Text 3", painterResource(R.drawable.android)),
+            PostModel(4, "Title 4", "Text 4", painterResource(R.drawable.android)),
+            PostModel(5, "Title 5", "Text 5", painterResource(R.drawable.android)),
+            PostModel(6, "Title 6", "Text 6", painterResource(R.drawable.android)),
+            PostModel(7, "Title 7", "Text 7", painterResource(R.drawable.android)),
+            PostModel(8, "Title 8", "Text 8", painterResource(R.drawable.android)),
+            PostModel(9, "Title 9", "Text 9", painterResource(R.drawable.android)),
+            PostModel(10, "Title 10", "Text 10", painterResource(R.drawable.android))
         )
         Column(
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .padding(10.dp,90.dp,10.dp,50.dp)
+                .padding(10.dp, 90.dp, 10.dp, 50.dp)
                 .fillMaxSize()
 
         )
         {
-           // Post(post)
+            // Post(post)
             //PostCard(1,"This a card title","this is the card text", painterResource(R.drawable.android) )
             PostGrid(post)
         }
@@ -877,20 +897,20 @@ private fun Bars(){
                 .fillMaxWidth()
                 .height(65.dp)
                 .background(Color.Black)
-                .padding(2.dp,5.dp),
+                .padding(2.dp, 5.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
-        ){
-         Column {
-             IconButton(onClick = {}, Modifier.size(30.dp)) {
-                 Icon(
-                     Icons.Outlined.Home,
-                     contentDescription = "",
-                     tint = Color.White,
-                     modifier = Modifier.fillMaxSize()
-                     )
-             }
-             Text(text = "Home", color = Color.White)
-         }
+        ) {
+            Column {
+                IconButton(onClick = {}, Modifier.size(30.dp)) {
+                    Icon(
+                        Icons.Outlined.Home,
+                        contentDescription = "",
+                        tint = Color.White,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+                Text(text = "Home", color = Color.White)
+            }
             Column {
                 IconButton(onClick = {}, Modifier.size(30.dp)) {
                     Icon(
@@ -940,45 +960,50 @@ private fun Bars(){
 }
 
 @Composable
-fun Post(arrayPosts:Array<PostModel>, adaptive:String){
+fun Post(arrayPosts: Array<PostModel>, adaptive: String) {
     // lazyColumn y LazyRow
-    LazyColumn (
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-    ){
-        items(arrayPosts) { post->
-            when(adaptive){
-                "PhoneP" ->{
-                    PostCardCompact(post.id,post.title,post.text,post.image)
-            }
-                "Phonel" ->{
-                    PostCardCompact(post.id,post.title,post.text,post.image)
+    ) {
+        items(arrayPosts) { post ->
+            when (adaptive) {
+                "PhoneP" -> {
+                    PostCardCompact(post.id, post.title, post.text, post.image)
+                }
+
+                "Phonel" -> {
+                    PostCardCompact(post.id, post.title, post.text, post.image)
                 }
             }
-           PostCard(post.id,post.title,post.text,post.image)
+            PostCard(post.id, post.title, post.text, post.image)
         }
     }
 }
 
 @Composable
-fun PostGrid(arrayPosts:Array<PostModel>){
-    LazyVerticalGrid (
+fun PostGrid(arrayPosts: Array<PostModel>) {
+    LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 128.dp),
         modifier = Modifier
             .fillMaxSize()
-    ){
-        items(arrayPosts) { post->
-            PostCard(post.id,post.title,post.text,post.image)
+    ) {
+        items(arrayPosts) { post ->
+            PostCard(post.id, post.title, post.text, post.image)
         }
     }
 
 }
+
 @Composable
-@Preview(showBackground = true, device = "spec:id=reference_tablet,shape=Normal,width=1280,height=800,unit=dp,dpi=240")
-fun Adaptive(){
-    var WindowsSize =currentWindowAdaptiveInfo().windowSizeClass
-var height= currentWindowAdaptiveInfo().windowSizeClass.windowHeightSizeClass
-    var width= currentWindowAdaptiveInfo().windowSizeClass.windowWidthSizeClass
+@Preview(
+    showBackground = true,
+    device = "spec:id=reference_tablet,shape=Normal,width=1280,height=800,unit=dp,dpi=240"
+)
+fun Adaptive() {
+    var WindowsSize = currentWindowAdaptiveInfo().windowSizeClass
+    var height = currentWindowAdaptiveInfo().windowSizeClass.windowHeightSizeClass
+    var width = currentWindowAdaptiveInfo().windowSizeClass.windowWidthSizeClass
 
     //Compact Heigth < 600dp phone portrait
     //medium width >=600dp < 840dp tablets portrait
@@ -988,25 +1013,25 @@ var height= currentWindowAdaptiveInfo().windowSizeClass.windowHeightSizeClass
     //medium height >=480dp <900dp Tablet Landscape or Phone portrait
     //Expanded Height > 900dp Tablet In portrait
 
-    val post= arrayOf(
-        PostModel(1,"Title 1","Text 1",painterResource(R.drawable.android)),
-        PostModel(2,"Title 2","Text 2", painterResource(R.drawable.android)),
-        PostModel(3,"Title 3","Text 3", painterResource(R.drawable.android)),
-        PostModel(4,"Title 4","Text 4", painterResource(R.drawable.android)),
-        PostModel(5,"Title 5","Text 5",painterResource(R.drawable.android)),
-        PostModel(6,"Title 6","Text 6", painterResource(R.drawable.android)),
-        PostModel(7,"Title 7","Text 7", painterResource(R.drawable.android)),
-        PostModel(8,"Title 8","Text 8", painterResource(R.drawable.android)),
-        PostModel(9,"Title 9","Text 9", painterResource(R.drawable.android)),
-        PostModel(10,"Title 10","Text 10", painterResource(R.drawable.android)),
+    val post = arrayOf(
+        PostModel(1, "Title 1", "Text 1", painterResource(R.drawable.android)),
+        PostModel(2, "Title 2", "Text 2", painterResource(R.drawable.android)),
+        PostModel(3, "Title 3", "Text 3", painterResource(R.drawable.android)),
+        PostModel(4, "Title 4", "Text 4", painterResource(R.drawable.android)),
+        PostModel(5, "Title 5", "Text 5", painterResource(R.drawable.android)),
+        PostModel(6, "Title 6", "Text 6", painterResource(R.drawable.android)),
+        PostModel(7, "Title 7", "Text 7", painterResource(R.drawable.android)),
+        PostModel(8, "Title 8", "Text 8", painterResource(R.drawable.android)),
+        PostModel(9, "Title 9", "Text 9", painterResource(R.drawable.android)),
+        PostModel(10, "Title 10", "Text 10", painterResource(R.drawable.android)),
     )
-        if(width==WindowWidthSizeClass.COMPACT){
-            Post(post,"PhoneP")
-        } else if(height== WindowHeightSizeClass.COMPACT){
-            Post(post,"PhoneL")
-        } else{
-            Post(post,"PhoneL")
-        }
+    if (width == WindowWidthSizeClass.COMPACT) {
+        Post(post, "PhoneP")
+    } else if (height == WindowHeightSizeClass.COMPACT) {
+        Post(post, "PhoneL")
+    } else {
+        Post(post, "PhoneL")
+    }
 
     //Text(text =WindowsSize.toString())
 
