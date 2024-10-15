@@ -1,13 +1,9 @@
 package com.example.prueba.ui.screens
-
-import android.icu.text.ListFormatter.Width
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-//import androidx.compose.foundation.layout.FlowRowScopeInstance.align
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,24 +17,22 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material.icons.outlined.Build
 import androidx.compose.material.icons.outlined.Call
-import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
@@ -59,7 +53,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.InputChip
 import androidx.compose.material3.InputChipDefaults
-import androidx.compose.material3.Label
 import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -69,7 +62,6 @@ import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
-import androidx.compose.material3.SliderPositions
 import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -79,7 +71,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TimeInput
 import androidx.compose.material3.TimePicker
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
-import androidx.compose.material3.contentColorFor
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.rememberTimePickerState
@@ -95,7 +86,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -103,7 +93,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.window.core.layout.WindowHeightSizeClass
 import androidx.window.core.layout.WindowWidthSizeClass
 import com.example.prueba.R
@@ -112,10 +101,9 @@ import com.example.prueba.data.model.PostModel
 import com.example.prueba.ui.components.PostCard
 import com.example.prueba.ui.components.PostCardCompact
 import kotlinx.coroutines.launch
-import org.w3c.dom.Text
-import java.sql.Date
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 @Composable
@@ -123,19 +111,19 @@ fun ComponentsScreen(navController: NavController) {
     val menuOptions = arrayOf(
         MenuModel(1, "Buttons", "Buttons", Icons.Filled.AccountBox),
         MenuModel(2, "Floating Buttons", "FloatingButtons", Icons.Filled.DateRange),
-        MenuModel(3, "Chips", "Chips", Icons.Filled.AccountBox),
+        MenuModel(3, "Chips", "Chips", Icons.Filled.DateRange),
         MenuModel(4, "Progress", "Progress", Icons.Filled.DateRange),
-        MenuModel(5, "Sliders", "Sliders", Icons.Filled.AccountBox),
+        MenuModel(5, "Sliders", "Sliders", Icons.Filled.DateRange),
         MenuModel(6, "Switches", "Switches", Icons.Filled.DateRange),
-        MenuModel(7, "Badges", "Badges", Icons.Filled.AccountBox),
+        MenuModel(7, "Badges", "Badges", Icons.Filled.DateRange),
         MenuModel(8, "Date Pickers", "DatePickers", Icons.Filled.DateRange),
-        MenuModel(9, "Time Pickers", "TimePickers", Icons.Filled.AccountBox),
+        MenuModel(9, "Time Pickers", "TimePickers", Icons.Filled.DateRange),
         MenuModel(10, "Snack Bars", "SnackBars", Icons.Filled.DateRange),
-        MenuModel(11, "Alert Dialogs", "AlertDialogs", Icons.Filled.AccountBox),
+        MenuModel(11, "Alert Dialogs", "AlertDialogs", Icons.Filled.DateRange),
         MenuModel(12, "Bars", "Bars", Icons.Filled.DateRange),
-        MenuModel(13, " Adaptive", "Adaptive", Icons.Filled.DateRange),
+        MenuModel(13, "Adaptive", "Adaptive", Icons.Filled.DateRange),
     )
-    var component by rememberSaveable { mutableStateOf("") }
+    var component by rememberSaveable { mutableStateOf("")}
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     ModalNavigationDrawer(
@@ -148,8 +136,8 @@ fun ComponentsScreen(navController: NavController) {
                 LazyColumn {
                     items(menuOptions) { item ->
                         NavigationDrawerItem(
-                            icon = { Icon(item.icon, contentDescription = "") },
-                            label = { Text(text = item.title) },
+                            icon = { Icon(item.icon, contentDescription = "")},
+                            label = { Text(text = item.title)},
                             selected = false,
                             onClick = {
                                 component = item.option
@@ -162,223 +150,48 @@ fun ComponentsScreen(navController: NavController) {
                         )
                     }
                 }
-                /*
-                                //Buttons
-                                NavigationDrawerItem(
-                                    label = { Text(text = "Buttons") },
-                                    selected = false,
-                                    onClick = {
-                                        component = "Buttons"
-                                        scope.launch {
-                                            drawerState.apply {
-                                                close()
-                                            }
-                                        }
-                                    }
-                                )
-                                //FloatingButtons
-                                NavigationDrawerItem(
-                                    label = { Text(text = "FloatingButtons") },
-                                    selected = false,
-                                    onClick = {
-                                        component = "FloatingButtons"
-                                        scope.launch {
-                                            drawerState.apply {
-                                                close()
-                                            }
-                                        }
-                                    }
-                                )
-                                //Chips
-                                NavigationDrawerItem(
-                                    label = { Text(text = "Chips") },
-                                    selected = false,
-                                    onClick = {
-                                        component = "Chips"
-                                        scope.launch {
-                                            drawerState.apply {
-                                                close()
-                                            }
-                                        }
-                                    }
-                                )
-                                //Progress
-                                NavigationDrawerItem(
-                                    label = { Text(text = "Progress") },
-                                    selected = false,
-                                    onClick = {
-                                        component = "Progress"
-                                        scope.launch {
-                                            drawerState.apply {
-                                                close()
-                                            }
-                                        }
-                                    }
-                                )
-                                //Slider
-                                NavigationDrawerItem(
-                                    label = { Text(text = "Sliders") },
-                                    selected = false,
-                                    onClick = {
-                                        component = "Sliders"
-                                        scope.launch {
-                                            drawerState.apply {
-                                                close()
-                                            }
-                                        }
-                                    }
-                                )
-                                //Switches
-                                NavigationDrawerItem(
-                                    label = { Text(text = "Switches") },
-                                    selected = false,
-                                    onClick = {
-                                        component = "Switches"
-                                        scope.launch {
-                                            drawerState.apply {
-                                                close()
-                                            }
-                                        }
-                                    }
-                                )
-                                NavigationDrawerItem(
-                                    label = { Text(text = "Badges") },
-                                    selected = false,
-                                    onClick = {
-                                        component = "Badges"
-                                        scope.launch {
-                                            drawerState.apply {
-                                                close()
-                                            }
-                                        }
-                                    }
-                                )
-                                NavigationDrawerItem(
-                                    label = { Text(text = "DatePickers") },
-                                    selected = false,
-                                    onClick = {
-                                        component = "DatePickers"
-                                        scope.launch {
-                                            drawerState.apply {
-                                                close()
-                                            }
-                                        }
-                                    }
-                                )
-
-                                NavigationDrawerItem(
-                                    label = { Text(text = "TimePickers") },
-                                    selected = false,
-                                    onClick = {
-                                        component = "TimePickers"
-                                        scope.launch {
-                                            drawerState.apply {
-                                                close()
-                                            }
-                                        }
-                                    }
-                                )
-
-                                NavigationDrawerItem(
-                                        label = { Text(text = "SnackBars") },
-                                selected = false,
-                                onClick = {
-                                    component = "SnackBars"
-                                    scope.launch {
-                                        drawerState.apply {
-                                            close()
-                                        }
-                                    }
-                                }
-                                )
-                                NavigationDrawerItem(
-                                    label = { Text(text = "AlertDialogs") },
-                                    selected = false,
-                                    onClick = {
-                                        component = "AlertDialogs"
-                                        scope.launch {
-                                            drawerState.apply {
-                                                close()
-                                            }
-                                        }
-                                    }
-                                )
-                                NavigationDrawerItem(
-                                    label = { Text(text = "Bars") },
-                                    selected = false,
-                                    onClick = {
-                                        component = "Bars"
-                                        scope.launch {
-                                            drawerState.apply {
-                                                close()
-                                            }
-                                        }
-                                    }
-                                )
-                */
             }
         }
-
     ) {
         // Screen Content
         Column {
-            when (component) {
-                "Content1" -> {
-                    Content1()
-                }
-
-                "Content2" -> {
-                    Content2()
-                }
-
+            when(component){
                 "Buttons" -> {
                     Buttons()
                 }
-
                 "FloatingButtons" -> {
                     FloatingButtons()
                 }
-
                 "Chips" -> {
                     Chips()
                 }
-
                 "Progress" -> {
                     Progress()
                 }
-
                 "Sliders" -> {
                     Sliders()
                 }
-
                 "Switches" -> {
                     Switches()
                 }
-
                 "Badges" -> {
                     Badges()
                 }
-
                 "DatePickers" -> {
                     DatePickers()
                 }
-
                 "TimePickers" -> {
                     TimePickers()
                 }
-
                 "SnackBars" -> {
                     SnackBars()
                 }
-
                 "AlertDialogs" -> {
                     AlertDialogs()
                 }
-
                 "Bars" -> {
                     Bars()
                 }
-
                 "Adaptive" -> {
                     Adaptive()
                 }
@@ -388,36 +201,26 @@ fun ComponentsScreen(navController: NavController) {
 }
 
 @Composable
-fun Content1() {
-    Text(text = "Content 1")
-}
-
-@Composable
-fun Content2() {
-    Text(text = "Content 2")
-}
-
-@Composable
-fun Buttons() {
-    Column(
+fun Buttons(){
+    Column (
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
             .fillMaxSize()
-    ) {
-        Button(onClick = {}) {
+    ){
+        Button(onClick ={}){
             Text("Filled")
         }
-        FilledTonalButton(onClick = {}) {
+        FilledTonalButton(onClick ={}) {
             Text("Tonal")
         }
-        OutlinedButton(onClick = {}) {
+        OutlinedButton(onClick ={}) {
             Text("Outlined")
         }
-        ElevatedButton(onClick = {}) {
+        ElevatedButton(onClick ={}) {
             Text("Elevated")
         }
-        TextButton(onClick = {}) {
+        TextButton(onClick ={}) {
             Text("Text")
         }
     }
@@ -432,18 +235,18 @@ fun FloatingButtons() {
             .fillMaxSize()
     ) {
         FloatingActionButton(onClick = {}) {
-            Icon(Icons.Filled.Add, "")
+            Icon(Icons.Filled.Add,"")
         }
         SmallFloatingActionButton(onClick = {}) {
-            Icon(Icons.Filled.Add, "")
+            Icon(Icons.Filled.Add,"")
         }
         LargeFloatingActionButton(onClick = {}) {
-            Icon(Icons.Filled.Add, "")
+            Icon(Icons.Filled.Add,"")
         }
         ExtendedFloatingActionButton(
             onClick = {},
-            icon = { Icon(Icons.Filled.Add, "") },
-            text = { Text(text = "Extended FAB") }
+            icon = {Icon(Icons.Filled.Add,"")},
+            text = {Text(text = "Extended FAB")}
         )
     }
 }
@@ -458,20 +261,18 @@ fun Chips() {
     ) {
         AssistChip(
             onClick = {},
-            label = { Text("Assist Chip") },
+            label = {Text("Assist Chip")},
             leadingIcon = {
-                Icon(
-                    Icons.Filled.AccountBox, "",
-                    Modifier.size(AssistChipDefaults.IconSize)
-                )
+                Icon(Icons.Filled.AccountBox,"",
+                    Modifier.size(AssistChipDefaults.IconSize))
             }
         )
         var selected by remember { mutableStateOf(false) }
         FilterChip(
             selected = selected,
-            onClick = { selected = !selected },
-            label = { Text("Filter Chip") },
-            leadingIcon = if (selected) {
+            onClick = {selected = !selected},
+            label = { Text("Filter Chip")},
+            leadingIcon = if (selected){
                 {
                     Icon(
                         Icons.Filled.AccountBox, "",
@@ -490,15 +291,14 @@ fun Chips() {
 fun InputChipExample(
     text: String,
     onDismiss: () -> Unit
-) {
+){
     var enabled by remember { mutableStateOf(true) }
-    if (!enabled) return
+    if(!enabled) return
 
     InputChip(
-        label = { Text(text) },
+        label = { Text(text)},
         selected = enabled,
-        onClick = {
-            onDismiss()
+        onClick = { onDismiss()
             enabled = !enabled
         },
         avatar = {
@@ -510,10 +310,9 @@ fun InputChipExample(
         },
         trailingIcon = {
             Icon(
-                Icons.Filled.Person,
+                Icons.Filled.Close,
                 contentDescription = "",
                 Modifier.size(InputChipDefaults.AvatarSize)
-
             )
         }
     )
@@ -526,8 +325,7 @@ fun Progress() {
         verticalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
             .fillMaxSize()
-    )
-    {
+    ) {
         LinearProgressIndicator(
             modifier = Modifier.fillMaxWidth()
         )
@@ -545,11 +343,11 @@ fun Sliders() {
         modifier = Modifier
             .fillMaxSize()
     ) {
-        var sliderPosition by remember { mutableStateOf(50f) }
+        var sliderPosition by remember { mutableStateOf(50f)}
         Column {
             Slider(
                 value = sliderPosition,
-                onValueChange = { sliderPosition = it },
+                onValueChange = {sliderPosition = it},
                 steps = 10,
                 valueRange = 0f..100f
             )
@@ -579,11 +377,11 @@ fun Switches() {
         )
         var checked2 by remember { mutableStateOf(true) }
         Switch(
-            checked = checked,
+            checked = checked2,
             onCheckedChange = {
-                checked = it
+                checked2 = it
             },
-            thumbContent = if (checked2) {
+            thumbContent = if (checked2){
                 {
                     Icon(
                         Icons.Filled.Check,
@@ -598,7 +396,7 @@ fun Switches() {
         var checked3 by remember { mutableStateOf(true) }
         Checkbox(
             checked = checked3,
-            onCheckedChange = { checked3 = it }
+            onCheckedChange = {checked3 = it}
         )
     }
 }
@@ -611,7 +409,8 @@ fun Badges() {
         modifier = Modifier
             .fillMaxSize()
     ) {
-        var itemCount by remember { mutableStateOf(0) }
+        var itemCount by remember { mutableStateOf(0)}
+
         BadgedBox(
             badge = {
                 if (itemCount > 0) {
@@ -619,7 +418,7 @@ fun Badges() {
                         containerColor = Color.Red,
                         contentColor = Color.White
                     ) {
-                        Text("itemCount")
+                        Text("$itemCount")
                     }
                 }
             }
@@ -631,8 +430,8 @@ fun Badges() {
         }
         Button(
             onClick = { itemCount++ }
-        ) {
-            Text("add item")
+        ){
+            Text("Add item")
         }
     }
 }
@@ -700,7 +499,6 @@ fun convertMillisToDate(millis: Long): String {
     val formatter = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
     return formatter.format(Date(millis))
 }
-
 
 @Composable
 fun TimePickers() {
@@ -786,13 +584,16 @@ fun SnackBars() {
     ) {
         val snackState = remember { SnackbarHostState() }
         val snackScope = rememberCoroutineScope()
+
         SnackbarHost(hostState = snackState, Modifier)
 
         fun launchSnackBar() {
-            snackScope.launch { snackState.showSnackbar("the message was sent") }
+            snackScope.launch { snackState.showSnackbar("The message was sent") }
         }
+
         Button(::launchSnackBar) {
-            Text("show Snackbar")
+            Text("Show Snackbar")
+
         }
     }
 }
@@ -806,18 +607,18 @@ fun AlertDialogs() {
             .fillMaxSize()
     ) {
         var showAlertDialog by remember { mutableStateOf(false) }
-        var selecteOption by remember { mutableStateOf("") }
+        var selectedOption by remember { mutableStateOf("") }
 
         if (showAlertDialog) {
             AlertDialog(
-                icon = { Icon(Icons.Filled.Warning, contentDescription = "") },
-                title = { Text(text = "confirm deletion") },
-                text = { Text(text = "Are you sure you want to delete the file") },
+                icon = { Icon(Icons.Filled.Warning, contentDescription = "")},
+                title = { Text(text = "Confirm deletion")},
+                text = { Text(text = "Are you sure you want to delete the file?")},
                 onDismissRequest = {},
                 confirmButton = {
                     TextButton(
                         onClick = {
-                            selecteOption = "Confirm"
+                            selectedOption = "Confirm"
                             showAlertDialog = false
                         }
                     ) { Text(text = "Confirm") }
@@ -825,16 +626,17 @@ fun AlertDialogs() {
                 dismissButton = {
                     TextButton(
                         onClick = {
-                            selecteOption = "Dismiss"
+                            selectedOption = "Dismiss"
                             showAlertDialog = false
                         }
                     ) { Text(text = "Dismiss") }
-                }
+                },
             )
         }
-        Text(selecteOption)
-        Button(onClick = { showAlertDialog = true }) {
-            Text("show alert dialog")
+
+        Text(selectedOption)
+        Button(onClick = {showAlertDialog = true}) {
+            Text("Show alert dialog")
         }
     }
 }
@@ -846,7 +648,7 @@ private fun Bars() {
             .fillMaxSize()
             .background(Color.DarkGray)
     ) {
-        Row(
+        Row (
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .fillMaxWidth()
@@ -857,40 +659,36 @@ private fun Bars() {
         {
             Icon(Icons.Filled.Menu, contentDescription = "", tint = Color.White)
             Text(
-                text = "App title",
+                text ="App Title",
                 color = Color.White,
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp
             )
-
             Icon(Icons.Filled.Settings, contentDescription = "", tint = Color.White)
         }
         val post = arrayOf(
-            PostModel(1, "Title 1", "Text 1", painterResource(R.drawable.android)),
-            PostModel(2, "Title 2", "Text 2", painterResource(R.drawable.android)),
-            PostModel(3, "Title 3", "Text 3", painterResource(R.drawable.android)),
-            PostModel(4, "Title 4", "Text 4", painterResource(R.drawable.android)),
-            PostModel(5, "Title 5", "Text 5", painterResource(R.drawable.android)),
-            PostModel(6, "Title 6", "Text 6", painterResource(R.drawable.android)),
-            PostModel(7, "Title 7", "Text 7", painterResource(R.drawable.android)),
-            PostModel(8, "Title 8", "Text 8", painterResource(R.drawable.android)),
-            PostModel(9, "Title 9", "Text 9", painterResource(R.drawable.android)),
-            PostModel(10, "Title 10", "Text 10", painterResource(R.drawable.android))
+            PostModel(1,"Title 1","Text 1",painterResource(R.drawable.android)),
+            PostModel(2,"Title 2","Text 2",painterResource(R.drawable.android)),
+            PostModel(3,"Title 3","Text 3",painterResource(R.drawable.android)),
+            PostModel(4,"Title 4","Text 4",painterResource(R.drawable.android)),
+            PostModel(5,"Title 5","Text 5",painterResource(R.drawable.android)),
+            PostModel(6,"Title 6","Text 6",painterResource(R.drawable.android)),
+            PostModel(7,"Title 7","Text 7",painterResource(R.drawable.android)),
+            PostModel(8,"Title 8","Text 8",painterResource(R.drawable.android)),
+            PostModel(9,"Title 9","Text 9",painterResource(R.drawable.android)),
+            PostModel(10,"Title 10","Text 10",painterResource(R.drawable.android)),
         )
-        Column(
+        Column (
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .padding(10.dp, 90.dp, 10.dp, 50.dp)
                 .fillMaxSize()
-
         )
         {
-            // Post(post)
-            //PostCard(1,"This a card title","this is the card text", painterResource(R.drawable.android) )
+            //Posts(post)
+            //PostCard(1,"This is a card title", "This is a card text", painterResource(R.drawable.descargar))
             PostGrid(post)
         }
-
-
         Row(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -899,11 +697,10 @@ private fun Bars() {
                 .background(Color.Black)
                 .padding(2.dp, 5.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
+        ){
             Column {
                 IconButton(onClick = {}, Modifier.size(30.dp)) {
-                    Icon(
-                        Icons.Outlined.Home,
+                    Icon(Icons.Outlined.Home,
                         contentDescription = "",
                         tint = Color.White,
                         modifier = Modifier.fillMaxSize()
@@ -913,105 +710,94 @@ private fun Bars() {
             }
             Column {
                 IconButton(onClick = {}, Modifier.size(30.dp)) {
-                    Icon(
-                        Icons.Outlined.Person,
+                    Icon(Icons.Outlined.Search,
                         contentDescription = "",
                         tint = Color.White,
                         modifier = Modifier.fillMaxSize()
                     )
                 }
-                Text(text = "Login", color = Color.White)
+                Text(text = "Search", color = Color.White)
             }
             Column {
                 IconButton(onClick = {}, Modifier.size(30.dp)) {
-                    Icon(
-                        Icons.Outlined.Call,
+                    Icon(Icons.Outlined.Person,
                         contentDescription = "",
                         tint = Color.White,
                         modifier = Modifier.fillMaxSize()
                     )
                 }
-                Text(text = "call", color = Color.White)
+                Text(text = "Profile", color = Color.White)
             }
             Column {
                 IconButton(onClick = {}, Modifier.size(30.dp)) {
-                    Icon(
-                        Icons.Outlined.Build,
+                    Icon(Icons.Outlined.Notifications,
                         contentDescription = "",
                         tint = Color.White,
                         modifier = Modifier.fillMaxSize()
                     )
                 }
-                Text(text = "Tools", color = Color.White)
+                Text(text = "Alerts", color = Color.White)
             }
             Column {
                 IconButton(onClick = {}, Modifier.size(30.dp)) {
-                    Icon(
-                        Icons.Outlined.Email,
+                    Icon(Icons.Outlined.Call,
                         contentDescription = "",
                         tint = Color.White,
                         modifier = Modifier.fillMaxSize()
                     )
                 }
-                Text(text = "Mail", color = Color.White)
+                Text(text = "Contact", color = Color.White)
             }
         }
     }
 }
 
 @Composable
-fun Post(arrayPosts: Array<PostModel>, adaptive: String) {
-    // lazyColumn y LazyRow
+fun Posts(arrayPosts:Array<PostModel>, adaptive:String){
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        items(arrayPosts) { post ->
-            when (adaptive) {
+        items(arrayPosts){ post->
+            when(adaptive) {
                 "PhoneP" -> {
-                    PostCardCompact(post.id, post.title, post.text, post.image)
+                    PostCardCompact(post.id, post.title, post.title, post.image)
                 }
-
-                "Phonel" -> {
-                    PostCardCompact(post.id, post.title, post.text, post.image)
+                "PhoneL" -> {
+                    PostCard(post.id, post.title, post.title, post.image)
                 }
             }
-            PostCard(post.id, post.title, post.text, post.image)
         }
     }
 }
 
 @Composable
-fun PostGrid(arrayPosts: Array<PostModel>) {
+fun PostGrid(arrayPosts:Array<PostModel>) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 128.dp),
         modifier = Modifier
             .fillMaxSize()
     ) {
-        items(arrayPosts) { post ->
-            PostCard(post.id, post.title, post.text, post.image)
+        items(arrayPosts){ post->
+            PostCard(post.id, post.title, post.title, post.image)
         }
     }
-
 }
 
+@Preview(showBackground = true, device ="spec:id=reference_tablet,shape=Normal,width=1280,height=800,unit=dp,dpi=240")
 @Composable
-@Preview(
-    showBackground = true,
-    device = "spec:id=reference_tablet,shape=Normal,width=1280,height=800,unit=dp,dpi=240"
-)
 fun Adaptive() {
     var WindowsSize = currentWindowAdaptiveInfo().windowSizeClass
     var height = currentWindowAdaptiveInfo().windowSizeClass.windowHeightSizeClass
     var width = currentWindowAdaptiveInfo().windowSizeClass.windowWidthSizeClass
 
-    //Compact Heigth < 600dp phone portrait
-    //medium width >=600dp < 840dp tablets portrait
-    //Expanded width> 840dp Tablet Landscape
+    // Compact width < 600dp Phone portrait
+    // Medium width >= 600dp < 840dp Tablets portrait
+    // Expanded width >840dp Tablet landscape
 
-    //compact width < 480dp phone Landscape
-    //medium height >=480dp <900dp Tablet Landscape or Phone portrait
-    //Expanded Height > 900dp Tablet In portrait
+    // Compact height < 480dp Phone landscape
+    // Medium height >= 480dp < 900dp Tablet landscape or Phone portrait
+    // Expanded height >900dp Tablet in portrait
 
     val post = arrayOf(
         PostModel(1, "Title 1", "Text 1", painterResource(R.drawable.android)),
@@ -1026,14 +812,11 @@ fun Adaptive() {
         PostModel(10, "Title 10", "Text 10", painterResource(R.drawable.android)),
     )
     if (width == WindowWidthSizeClass.COMPACT) {
-        Post(post, "PhoneP")
+        Posts(post, "PhoneP")
     } else if (height == WindowHeightSizeClass.COMPACT) {
-        Post(post, "PhoneL")
+        Posts(post, "PhoneL")
     } else {
-        Post(post, "PhoneL")
+        Posts(post, "PhoneL")
+        //Text(text = WindowsSize.toString())
     }
-
-    //Text(text =WindowsSize.toString())
-
-
 }
