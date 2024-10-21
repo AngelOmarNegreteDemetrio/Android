@@ -1,5 +1,5 @@
 package com.example.prueba
-
+import android.graphics.Picture
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,24 +12,24 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -42,70 +42,93 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import com.example.prueba.ui.theme.PruebaTheme
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.prueba.ui.screens.HomeScreen
 import com.example.prueba.ui.screens.MenuScreen
-import com.example.prueba.ui.theme.PruebaTheme
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.Star
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
+import com.example.prueba.ui.screens.ComponentsScreen
+import com.example.prueba.ui.screens.HomeScreen
+import com.example.prueba.ui.screens.MenuScreen
+
 
 //import androidx.navigation.compose.NavHostController
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        enableEdgeToEdge()//abarca el 100% de la pantalla
         setContent {
-ComposeMultiScreenApp()
-           Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState()),
+            ComposeMultiScreenApp()
+            /*
+            Column(
+                modifier=Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
-
             ){
-                //CustomText()
-                //Picture()
-                //Content1()
-                //Content2()
-              // Text(text ="Simple text")
-            //ModifierExample()
-            //ModifierExample2()
-               //ModifierExample3()
-               //BoxExample1()
-              // BoxExample2()
-            }
-     //Layouts
-           /*Column {
-                Text(text = "First Row")
-                Text(text = "Second Row")
-                Text(text = "Third Row")
+                CustomText()
+                Picture()
+                Content1()
+                Content2()
+                 //Text(text ="Simple text")
+                 ModifierExample()
+                ModifierExample2()
+                  ModifierExample3()
+                BoxExample1()
+                BoxExample2()
 
-                Row{
-                    Text(text = "Text1")
-                    Text(text = "Text2")
-                    Text(text = "Text3")
-                    Text(text = "Text2")
-                }
-                Box{
-                    Text(text = "Larabel 1")
-                    Text(text = "Larabel 2")
+            }
+            //Layouts
+            /*Column {
+                 Text(text = "First Row")
+                 Text(text = "Second Row")
+                 Text(text = "Third Row")
 
-                }
-                Greeting(name ="World")
-            }*/
-            }
-            }
+                 Row{
+                     Text(text = "Text1")
+                     Text(text = "Text2")
+                     Text(text = "Text3")
+                     Text(text = "Text2")
+                 }
+                 Box{
+                     Text(text = "Larabel 1")
+                     Text(text = "Larabel 2")
+
+                 }
+                 Greeting(name ="World")
+
+             }*/
+            */
         }
-
-    private fun column(function: () -> Unit) { 
-
     }
+}
+/*
 
+private fun column(function: () -> Unit) {
 
+}
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
@@ -115,14 +138,14 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     )
 }
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    PruebaTheme {
+    FJTheme {
         Greeting("Android")
     }
 }
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
 fun ModifierExample(){
     Column(
@@ -133,7 +156,7 @@ fun ModifierExample(){
 
     }
 }
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
 fun ModifierExample2(){
     Column(
@@ -144,14 +167,14 @@ fun ModifierExample2(){
     ){
         Text(text="Hello world")
 
-  }
+    }
 }
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
 fun ModifierExample3() {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxHeight()
             .padding(16.dp)
             .background(Color.Red)
             .border(width = 2.dp, color = Color.Green)
@@ -165,23 +188,23 @@ fun ModifierExample3() {
         Text(text = "Hello Item 4")
         Text(text = "Hello Item 5")
     }}
-    @Preview(showBackground = true)
-    @Composable
-    fun CustomText() {
-        Column {
-            Text(
-                stringResource(R.string.hello_world_text),
-                color = colorResource(R.color.purple_500),
-                fontSize = 28.sp,
-                fontWeight = FontWeight.ExtraBold
-            )
-            val gradientColors = listOf(Color.Cyan, Color.Blue, Color.Red)
-            Text(
-                stringResource(R.string.hello_world_text),
-                style = TextStyle(brush = Brush.linearGradient(colors =gradientColors))
-            )
-        }
+@Preview(showBackground = true)
+@Composable
+fun CustomText() {
+    Column {
+        Text(
+            stringResource(R.string.hello_world_text),
+            color = colorResource(R.color.purple_500),
+            fontSize = 28.sp,
+            fontWeight = FontWeight.ExtraBold
+        )
+        val gradientColors = listOf(Color.Cyan, Color.Blue, Color.Red)
+        Text(
+            stringResource(R.string.hello_world_text),
+            style = TextStyle(brush = Brush.linearGradient(colors =gradientColors))
+        )
     }
+}
 
 @Preview(showBackground = true)
 @Composable
@@ -193,27 +216,24 @@ fun Picture(){
     ){
         Image(
             modifier= Modifier
-                .fillMaxWidth()
-                .height(20.dp),
-            painter = painterResource(R.drawable.android),
+                .fillMaxWidth(),
+            painter = painterResource(R.drawable.descargar),
             contentDescription ="Logo Android",
             contentScale = ContentScale.Crop
         )
     }
-
 }
 
 @Preview(showBackground = true)
 @Composable
-fun Content1() {
+fun Content1(){
     Card(
         modifier = Modifier
             .background(Color.LightGray)
             .fillMaxWidth()
             .padding(5.dp)
-    ) {
-        Text(
-            text = "this is title",
+    ){
+        Text (text = "This is a Title",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
@@ -222,50 +242,52 @@ fun Content1() {
         Image(
             modifier = Modifier
                 .fillMaxWidth(),
-            painter = painterResource(id = R.drawable.android),
+            painter = painterResource(id = R.drawable.descargar),
             contentDescription = "Android Logo",
             contentScale = ContentScale.Crop
         )
         Text(
-            text = stringResource(R.string.Text_Card),
+            stringResource(R.string.Text_Card),
             textAlign = TextAlign.Justify,
             lineHeight = 18.sp,
             modifier = Modifier
                 .padding(10.dp)
         )
+
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun Content2(){
+fun Content2() {
     Card(
         modifier = Modifier
             .background(Color.LightGray)
             .fillMaxWidth()
             .padding(5.dp)
     ){
-        Row{
+        Row {
             Image(
                 modifier = Modifier
-                    .width(width = 150.dp)
-                    .height(height = 150.dp),
-                painter = painterResource(id = R.drawable.android),
+                    .width(150.dp)
+                    .height(150.dp),
+                //.fillMaxWidth()
+                painter = painterResource(id = R.drawable.descargar),
                 contentDescription = "Android Logo",
                 contentScale = ContentScale.Crop
             )
-
             Column {
-                Text(text="This is a title",
-                    fontSize = 16.sp,
+                Text (text = "This is a Title",
+                    fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .padding(10.dp)
                 )
-                Text(stringResource(R.string.Text_Card),
+                Text(
+                    stringResource(R.string.Text_Card),
                     textAlign = TextAlign.Justify,
-                    maxLines = 7,
-                    lineHeight = 16.sp,
+                    lineHeight = 18.sp,
+                    maxLines = 4,
                     modifier = Modifier
                         .padding(10.dp)
                 )
@@ -274,59 +296,59 @@ fun Content2(){
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun BoxExample1(){
-    Box(
-        modifier = Modifier
-            .background(Color.DarkGray)
-            .fillMaxWidth()
-            .padding(5.dp)
-    ){
-        Image(painterResource(R.drawable.android),
-            contentDescription = "Android Head Logo",
-            contentScale = ContentScale.FillBounds
-        )
-        Row(
+    @Preview(showBackground = true)
+    @Composable
+    fun BoxExample1() {
+        Box(
             modifier = Modifier
-                .background(Color.Red)
+                .background(Color.DarkGray)
                 .fillMaxWidth()
-                .padding(0.dp, 0.dp),
-            horizontalArrangement = Arrangement.Center
+                .padding(5.dp)
+        ){
+            Image(painterResource(R.drawable.descargar),
+                contentDescription = "Android Logo",
+                contentScale = ContentScale.FillBounds
+            )
+            Row(
+                modifier = Modifier
+
+                    .fillMaxWidth()
+                    .padding(0.dp, 0.dp),
+                horizontalArrangement = Arrangement.Center
             ){
-            Icon(
-                Icons.Filled.AccountCircle,
-                contentDescription = "Icon Account"
-            )
-            Text(text = "Text"
-            )
+                Icon(
+                    Icons.Filled.AccountCircle,
+                    contentDescription = "Icon Account"
+                )
+                Text(text = "Text")
+            }
         }
     }
-}
 
 @Preview(showBackground = true)
 @Composable
-fun BoxExample2(){
-    Box(modifier = Modifier
-        .background(Color.Magenta)
-        .padding(5.dp)
-        .size(250.dp)
-    ){
-        Text(text = "TopStart",Modifier.align(Alignment.TopStart))
-        Text(text = "TopEnd",Modifier.align(Alignment.TopEnd))
-        Text(text = "CenterStart",Modifier.align(Alignment.CenterStart))
-        Text(text = "Center",Modifier.align(Alignment.Center))
-        Text(text = "CenterEnd",Modifier.align(Alignment.CenterEnd))
-        Text(text = "BottomStart",Modifier.align(Alignment.BottomStart))
-        Text(text = "BottomEnd",Modifier.align(Alignment.BottomEnd))
+fun BoxExample2() {
+    Box(
+        modifier = Modifier
+            .background(Color.Magenta)
+            .padding(5.dp)
+            .size(290.dp)
+    ) {
+        Text(text = "TopStart", Modifier.align(Alignment.TopStart))
+        Text(text = "TopEnd", Modifier.align(Alignment.TopEnd))
+        Text(text = "CenterStart", Modifier.align(Alignment.CenterStart))
+        Text(text = "Center", Modifier.align(Alignment.Center))
+        Text(text = "CenterEnd", Modifier.align(Alignment.CenterEnd))
+        Text(text = "BottomStart", Modifier.align(Alignment.BottomStart))
+        Text(text = "BottomEnd", Modifier.align(Alignment.BottomEnd))
     }
-}
+    }
 
 fun clickAction(){
     println("Column Clicked")
 
 }
-@Preview
+*/@Preview(showBackground = true)
 @Composable
 fun ComposeMultiScreenApp(){
     val navController = rememberNavController()
@@ -334,10 +356,12 @@ fun ComposeMultiScreenApp(){
         SetupNavGraph(navController = navController)
     }
 }
+
 @Composable
 fun SetupNavGraph(navController: NavHostController){
-    NavHost(navController = navController, startDestination = "menu") {
-        composable("menu") { MenuScreen(navController) }
-        composable("home") { HomeScreen(navController) }
+    NavHost(navController = navController,startDestination = "component"){
+        composable("menu"){ MenuScreen(navController) }
+        composable("home"){ HomeScreen(navController) }
+        composable("component"){ ComponentsScreen(navController) }
     }
 }
