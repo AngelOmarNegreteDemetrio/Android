@@ -22,6 +22,7 @@ import com.example.prueba.navigation.NavManager
 import com.example.prueba.ui.screens.HomeScreen
 import com.example.prueba.ui.screens.MenuScreen
 import com.example.prueba.ui.screens.ComponentsScreen
+import com.example.prueba.ui.screens.LocalizacionScreen
 import com.example.prueba.ui.screens.LoginScreen
 import com.example.prueba.viewModel.SearchViewModel
 import com.example.prueba.ui.theme.MapasTheme
@@ -31,17 +32,9 @@ import com.example.prueba.ui.theme.MapasTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //Instancia del ViewModel
-        val viewModel: SearchViewModel by viewModels()
         enableEdgeToEdge()
         setContent {
-            MapasTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    NavManager(viewModel)
-                }
+            ComposeMultiScreenApp()
             }
         }
     }
@@ -59,14 +52,12 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun SetupNavGraph(navController: NavHostController) {
-        NavHost(navController = navController, startDestination = "Login") {
+        NavHost(navController = navController, startDestination = "menu") {
             composable("menu") { MenuScreen(navController) }
             composable("home") { HomeScreen(navController) }
             composable("component") { ComponentsScreen(navController) }
             composable("Login") { LoginScreen(navController) }
-            composable("Login") { LoginScreen(navController) }
-            composable("Google") { NavManager(viewModel()) }
+            composable("Localizacion") { LocalizacionScreen(viewModel()) }//expo 2
         }
 
     }
-}
