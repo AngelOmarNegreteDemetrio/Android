@@ -1,6 +1,5 @@
 package com.example.prueba
 
-
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,6 +18,7 @@ import com.example.prueba.ui.screens.MenuScreen
 import com.example.prueba.ui.screens.ComponentsScreen
 import com.example.prueba.ui.screens.LocalizacionScreen
 import com.example.prueba.ui.screens.LoginScreen
+
 
 
 //exposicion 2
