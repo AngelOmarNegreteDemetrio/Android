@@ -71,6 +71,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import com.example.prueba.ui.screens.ComponentsScreen
 import com.example.prueba.ui.screens.HomeScreen
+import com.example.prueba.ui.screens.LoginScreen
 import com.example.prueba.ui.screens.MenuScreen
 
 
@@ -359,9 +360,10 @@ fun ComposeMultiScreenApp(){
 
 @Composable
 fun SetupNavGraph(navController: NavHostController){
-    NavHost(navController = navController,startDestination = "component"){
+    NavHost(navController = navController,startDestination = "login"){
         composable("menu"){ MenuScreen(navController) }
         composable("home"){ HomeScreen(navController) }
         composable("component"){ ComponentsScreen(navController) }
+        composable("login"){ LoginScreen(navController) }
     }
 }
