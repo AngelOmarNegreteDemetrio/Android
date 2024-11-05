@@ -372,8 +372,7 @@ fun SetupNavGraph(navController: NavHostController){
         //expo 1 programación de tareas en 2do plano
         composable("SegundoPlano"){ SegundoPlanoScreen() }
         //expo 2 servicios de rastreo y geolocalización
-        composable("Localizacion"){ LocalizacionScreen(viewModel()) }
-
+        composable("Location"){ LocalizacionScreen(viewModel()) }
         //expo 3 Acceso a contactos y calendario
         composable("ContactCalendar"){ ContactCalendarScreen() }
 
