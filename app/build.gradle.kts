@@ -61,7 +61,25 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.adaptive.android)
+    implementation(libs.androidx.material3.android)
+    implementation("com.google.code.gson:gson:2.8.9")
     // implementation(libs.androidx.navigation.runtime.ktx)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
+
+    //Mapas
+    implementation("com.google.maps.android:maps-compose:2.14.0")
+    implementation("com.google.android.gms:play-services-maps:19.0.0")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
+    //Places
+    implementation("com.google.android.libraries.places:places:4.0.0")
+    //Navigation
+    implementation(libs.androidx.navigation.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
