@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import androidx.navigation.compose.composable
 
 @Composable
 fun MenuScreen(navController: NavController) {
@@ -21,6 +22,20 @@ fun MenuScreen(navController: NavController) {
         Text(text = "This is the Menu Screen")
         Button(onClick = { navController.navigate("component") }) {
             Text("Go to Home")
+
         }
+        //expo 1
+        Button(onClick = { navController.navigate("SegundoPlano") }) {
+            Text("Go to alarm")
+        }
+        //expo 2
+        Button(onClick = { navController.navigate("Localizacion") }) {
+            Text("Go to localización")
+        }
+        //expo 3
+        Button(onClick = { navController.navigate("ContactCalendar") }) {
+            Text("Go to ContactCalendar")
+        }
+
     }
 }

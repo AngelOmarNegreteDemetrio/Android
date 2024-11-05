@@ -76,6 +76,7 @@ import com.example.prueba.ui.screens.HomeScreen
 import com.example.prueba.ui.screens.LocalizacionScreen
 import com.example.prueba.ui.screens.LoginScreen
 import com.example.prueba.ui.screens.MenuScreen
+import com.example.prueba.ui.screens.SegundoPlanoScreen
 
 
 //import androidx.navigation.compose.NavHostController
@@ -363,13 +364,13 @@ fun ComposeMultiScreenApp(){
 
 @Composable
 fun SetupNavGraph(navController: NavHostController){
-    NavHost(navController = navController,startDestination = "ContactCalendar"){
+    NavHost(navController = navController,startDestination = "menu"){
         composable("menu"){ MenuScreen(navController) }
         composable("home"){ HomeScreen(navController) }
         composable("component"){ ComponentsScreen(navController) }
         composable("login"){ LoginScreen(navController) }
         //expo 1 programación de tareas en 2do plano
-
+        composable("SegundoPlano"){ SegundoPlanoScreen() }
         //expo 2 servicios de rastreo y geolocalización
         composable("Localizacion"){ LocalizacionScreen(viewModel()) }
 
