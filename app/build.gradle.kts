@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.prueba"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.prueba"
@@ -78,6 +78,8 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
     //Places
     implementation("com.google.android.libraries.places:places:4.0.0")
+    implementation("androidx.work:work-runtime-ktx:2.10.0")
+
     //Navigation
     implementation(libs.androidx.navigation.compose)
     testImplementation(libs.junit)
