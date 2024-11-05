@@ -30,7 +30,7 @@ fun MenuScreen(navController: NavController) {
         }
         //expo 2
         Button(onClick = { navController.navigate("Localizacion") }) {
-            Text("Go to localizacion")
+            Text("Go to localización")
         }
         //expo 3
         Button(onClick = { navController.navigate("ContactCalendar") }) {
