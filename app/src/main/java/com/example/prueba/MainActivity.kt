@@ -71,6 +71,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.prueba.ui.screens.ComponentsScreen
+import com.example.prueba.ui.screens.ContactCalendarScreen
 import com.example.prueba.ui.screens.HomeScreen
 import com.example.prueba.ui.screens.LocalizacionScreen
 import com.example.prueba.ui.screens.LoginScreen
@@ -362,11 +363,24 @@ fun ComposeMultiScreenApp(){
 
 @Composable
 fun SetupNavGraph(navController: NavHostController){
-    NavHost(navController = navController,startDestination = "localizacion"){
+    NavHost(navController = navController,startDestination = "ContactCalendar"){
         composable("menu"){ MenuScreen(navController) }
         composable("home"){ HomeScreen(navController) }
         composable("component"){ ComponentsScreen(navController) }
         composable("login"){ LoginScreen(navController) }
+        //expo 1 programación de tareas en 2do plano
+
+        //expo 2 servicios de rastreo y geolocalización
         composable("Localizacion"){ LocalizacionScreen(viewModel()) }
+
+        //expo 3 Acceso a contactos y calendario
+        composable("ContactCalendar"){ ContactCalendarScreen() }
+
+        //expo 4 Acceso a sensores biométricos
+
+        //expo 5 Acceso a cámara y manejo de archivos del dispositivo
+
+        //expo 6 Conectividad Wifi y datos celulares
+
     }
 }
