@@ -74,6 +74,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.prueba.ui.screens.CameraScreen
 import com.example.prueba.ui.screens.ComponentsScreen
 import com.example.prueba.ui.screens.ContactCalendarScreen
 import com.example.prueba.ui.screens.HomeScreen
@@ -384,7 +385,7 @@ fun SetupNavGraph(navController: NavHostController){
         //expo 4 Acceso a sensores biométricos
 
         //expo 5 Acceso a cámara y manejo de archivos del dispositivo
-
+        composable("CamaraScreen"){ CameraScreen() }
         //expo 6 Conectividad Wifi y datos celulares
         composable("wifidatos") {
             WifiDatosScreen(
