@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.biometric.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -126,5 +127,14 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.4.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    implementation ("androidx.biometric:biometric:1.2.0")
+    implementation ("androidx.asynclayoutinflater:asynclayoutinflater:1.0.0-alpha01")
+
+    // Biometric Library
+    implementation("androidx.biometric:biometric:1.4.0-alpha02")
+
+// AsyncLayoutInflater para AppCompat
+    implementation("androidx.appcompat:appcompat:1.6.1")
 
 }
