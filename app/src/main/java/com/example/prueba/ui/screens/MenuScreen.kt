@@ -66,8 +66,8 @@ fun MenuScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(text = "presentation 6")
-        Button(onClick = { navController.navigate("ContactCalendar") }) {
-            Text("Wifi connectivity")
+        Button(onClick = {navController.navigate("wifidatos")}) {
+            Text("Go to Wifi-Datos")
         }
 
     }

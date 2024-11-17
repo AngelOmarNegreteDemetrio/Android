@@ -1,5 +1,8 @@
 package com.example.prueba
+import android.content.Context
 import android.graphics.Picture
+import android.net.ConnectivityManager
+import android.net.wifi.WifiManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -63,6 +66,7 @@ import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -77,6 +81,7 @@ import com.example.prueba.ui.screens.LocalizacionScreen
 import com.example.prueba.ui.screens.LoginScreen
 import com.example.prueba.ui.screens.MenuScreen
 import com.example.prueba.ui.screens.SegundoPlanoScreen
+import com.example.prueba.ui.screens.WifiDatosScreen
 
 
 //import androidx.navigation.compose.NavHostController
@@ -381,6 +386,12 @@ fun SetupNavGraph(navController: NavHostController){
         //expo 5 Acceso a cámara y manejo de archivos del dispositivo
 
         //expo 6 Conectividad Wifi y datos celulares
-
+        composable("wifidatos") {
+            WifiDatosScreen(
+                wifiManager = LocalContext.current.getSystemService(Context.WIFI_SERVICE) as WifiManager,
+                connectivityManager = LocalContext.current.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager,
+                context = LocalContext.current as ComponentActivity
+            )
+        }
     }
 }
