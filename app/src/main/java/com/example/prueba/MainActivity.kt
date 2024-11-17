@@ -73,7 +73,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.activity
+import com.example.prueba.ui.screens.BiometricsScreen
 import com.example.prueba.ui.screens.CameraScreen
 import com.example.prueba.ui.screens.ComponentsScreen
 import com.example.prueba.ui.screens.ContactCalendarScreen
@@ -84,10 +87,9 @@ import com.example.prueba.ui.screens.MenuScreen
 import com.example.prueba.ui.screens.SegundoPlanoScreen
 import com.example.prueba.ui.screens.WifiDatosScreen
 
-
 //import androidx.navigation.compose.NavHostController
 
-class MainActivity : ComponentActivity() {
+class MainActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()//abarca el 100% de la pantalla
@@ -381,9 +383,8 @@ fun SetupNavGraph(navController: NavHostController){
         composable("Location"){ LocalizacionScreen(viewModel()) }
         //expo 3 Acceso a contactos y calendario
         composable("ContactCalendar"){ ContactCalendarScreen() }
-
         //expo 4 Acceso a sensores biométricos
-
+        composable("BiometricsScreen") { BiometricsScreen() }
         //expo 5 Acceso a cámara y manejo de archivos del dispositivo
         composable("CamaraScreen"){ CameraScreen() }
         //expo 6 Conectividad Wifi y datos celulares

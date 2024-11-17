@@ -52,8 +52,8 @@ fun MenuScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(text = "presentation 4")
-        Button(onClick = { navController.navigate("ContactCalendar") }) {
-            Text("biometric sensors")
+        Button(onClick = {navController.navigate("BiometricsScreen")}) {
+            Text("Go to Biometrics")
         }
 
         Spacer(modifier = Modifier.height(16.dp))
