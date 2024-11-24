@@ -11,7 +11,7 @@ interface ApiService {
     suspend fun getServices(): Response<List<ServiceModel>>
 
     @GET("service/{id}")
-    suspend fun getServices(@Path("id") id: Int): Response<ServiceModel>
+    suspend fun getService(@Path("id") id: Int): Response<ServiceModel>
 
     @POST("Service")
     suspend fun createService(@Body service: ServiceModel): Response<ServiceModel>
