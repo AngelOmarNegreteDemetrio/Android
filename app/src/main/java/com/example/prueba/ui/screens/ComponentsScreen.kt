@@ -3,9 +3,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-//import androidx.compose.foundation.layout.FlowRowScopeInstance.align
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,24 +12,27 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material.icons.outlined.Build
 import androidx.compose.material.icons.outlined.Call
-import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
@@ -52,7 +53,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.InputChip
 import androidx.compose.material3.InputChipDefaults
-import androidx.compose.material3.Label
 import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -62,7 +62,6 @@ import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
-import androidx.compose.material3.SliderPositions
 import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -71,7 +70,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TimeInput
 import androidx.compose.material3.TimePicker
-import androidx.compose.material3.contentColorFor
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.rememberTimePickerState
@@ -80,12 +79,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -93,18 +93,37 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import androidx.navigation.NavController
+import androidx.window.core.layout.WindowHeightSizeClass
+import androidx.window.core.layout.WindowWidthSizeClass
 import com.example.prueba.R
+import com.example.prueba.data.model.MenuModel
 import com.example.prueba.data.model.PostModel
+import com.example.prueba.ui.components.PostCard
+import com.example.prueba.ui.components.PostCardCompact
 import kotlinx.coroutines.launch
-import org.w3c.dom.Text
-import java.sql.Date
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 @Composable
 fun ComponentsScreen(navController: NavController) {
-    var component by remember { mutableStateOf("")}
+    val menuOptions = arrayOf(
+        MenuModel(1, "Buttons", "Buttons", Icons.Filled.AccountBox),
+        MenuModel(2, "Floating Buttons", "FloatingButtons", Icons.Filled.DateRange),
+        MenuModel(3, "Chips", "Chips", Icons.Filled.DateRange),
+        MenuModel(4, "Progress", "Progress", Icons.Filled.DateRange),
+        MenuModel(5, "Sliders", "Sliders", Icons.Filled.DateRange),
+        MenuModel(6, "Switches", "Switches", Icons.Filled.DateRange),
+        MenuModel(7, "Badges", "Badges", Icons.Filled.DateRange),
+        MenuModel(8, "Date Pickers", "DatePickers", Icons.Filled.DateRange),
+        MenuModel(9, "Time Pickers", "TimePickers", Icons.Filled.DateRange),
+        MenuModel(10, "Snack Bars", "SnackBars", Icons.Filled.DateRange),
+        MenuModel(11, "Alert Dialogs", "AlertDialogs", Icons.Filled.DateRange),
+        MenuModel(12, "Bars", "Bars", Icons.Filled.DateRange),
+        MenuModel(13, "Adaptive", "Adaptive", Icons.Filled.DateRange),
+    )
+    var component by rememberSaveable { mutableStateOf("")}
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     ModalNavigationDrawer(
@@ -114,198 +133,29 @@ fun ComponentsScreen(navController: NavController) {
             ModalDrawerSheet {
                 Text(text = "Menu", modifier = Modifier.padding(16.dp))
                 HorizontalDivider()
-                //Content1
-                NavigationDrawerItem(
-                    label = { Text(text = "Content 1") },
-                    selected = false,
-                    onClick = {
-                        component = "Content1"
-                        scope.launch {
-                            drawerState.apply {
-                                close()
+                LazyColumn {
+                    items(menuOptions) { item ->
+                        NavigationDrawerItem(
+                            icon = { Icon(item.icon, contentDescription = "")},
+                            label = { Text(text = item.title)},
+                            selected = false,
+                            onClick = {
+                                component = item.option
+                                scope.launch {
+                                    drawerState.apply {
+                                        close()
+                                    }
+                                }
                             }
-                        }
-                    }
-                )
-                //Content2
-                NavigationDrawerItem(
-                    label = { Text(text = "Content 2") },
-                    selected = false,
-                    onClick = {
-                        component = "Content2"
-                        scope.launch {
-                            drawerState.apply {
-                                close()
-                            }
-                        }
-                    }
-                )
-                //Buttons
-                NavigationDrawerItem(
-                    label = { Text(text = "Buttons") },
-                    selected = false,
-                    onClick = {
-                        component = "Buttons"
-                        scope.launch {
-                            drawerState.apply {
-                                close()
-                            }
-                        }
-                    }
-                )
-                //FloatingButtons
-                NavigationDrawerItem(
-                    label = { Text(text = "FloatingButtons") },
-                    selected = false,
-                    onClick = {
-                        component = "FloatingButtons"
-                        scope.launch {
-                            drawerState.apply {
-                                close()
-                            }
-                        }
-                    }
-                )
-                //Chips
-                NavigationDrawerItem(
-                    label = { Text(text = "Chips") },
-                    selected = false,
-                    onClick = {
-                        component = "Chips"
-                        scope.launch {
-                            drawerState.apply {
-                                close()
-                            }
-                        }
-                    }
-                )
-                //Progress
-                NavigationDrawerItem(
-                    label = { Text(text = "Progress") },
-                    selected = false,
-                    onClick = {
-                        component = "Progress"
-                        scope.launch {
-                            drawerState.apply {
-                                close()
-                            }
-                        }
-                    }
-                )
-                //Slider
-                NavigationDrawerItem(
-                    label = { Text(text = "Sliders") },
-                    selected = false,
-                    onClick = {
-                        component = "Sliders"
-                        scope.launch {
-                            drawerState.apply {
-                                close()
-                            }
-                        }
-                    }
-                )
-                //Switches
-                NavigationDrawerItem(
-                    label = { Text(text = "Switches") },
-                    selected = false,
-                    onClick = {
-                        component = "Switches"
-                        scope.launch {
-                            drawerState.apply {
-                                close()
-                            }
-                        }
-                    }
-                )
-                NavigationDrawerItem(
-                    label = { Text(text = "Badges") },
-                    selected = false,
-                    onClick = {
-                        component = "Badges"
-                        scope.launch {
-                            drawerState.apply {
-                                close()
-                            }
-                        }
-                    }
-                )
-                NavigationDrawerItem(
-                    label = { Text(text = "DatePickers") },
-                    selected = false,
-                    onClick = {
-                        component = "DatePickers"
-                        scope.launch {
-                            drawerState.apply {
-                                close()
-                            }
-                        }
-                    }
-                )
-
-                NavigationDrawerItem(
-                    label = { Text(text = "TimePickers") },
-                    selected = false,
-                    onClick = {
-                        component = "TimePickers"
-                        scope.launch {
-                            drawerState.apply {
-                                close()
-                            }
-                        }
-                    }
-                )
-
-                NavigationDrawerItem(
-                        label = { Text(text = "SnackBars") },
-                selected = false,
-                onClick = {
-                    component = "SnackBars"
-                    scope.launch {
-                        drawerState.apply {
-                            close()
-                        }
+                        )
                     }
                 }
-                )
-                NavigationDrawerItem(
-                    label = { Text(text = "AlertDialogs") },
-                    selected = false,
-                    onClick = {
-                        component = "AlertDialogs"
-                        scope.launch {
-                            drawerState.apply {
-                                close()
-                            }
-                        }
-                    }
-                )
-                NavigationDrawerItem(
-                    label = { Text(text = "Bars") },
-                    selected = false,
-                    onClick = {
-                        component = "Bars"
-                        scope.launch {
-                            drawerState.apply {
-                                close()
-                            }
-                        }
-                    }
-                )
-
             }
         }
-
     ) {
         // Screen Content
         Column {
             when(component){
-                "Content1" -> {
-                    Content1()
-                }
-                "Content2" -> {
-                    Content2()
-                }
                 "Buttons" -> {
                     Buttons()
                 }
@@ -342,19 +192,12 @@ fun ComponentsScreen(navController: NavController) {
                 "Bars" -> {
                     Bars()
                 }
+                "Adaptive" -> {
+                    Adaptive()
+                }
             }
         }
     }
-}
-
-@Composable
-fun Content1(){
-    Text(text= "Content 1")
-}
-
-@Composable
-fun Content2(){
-    Text(text= "Content 2")
 }
 
 @Composable
@@ -440,59 +283,57 @@ fun Chips() {
                 null
             }
         )
-            InputChipExample("Dismiss", {})
+        InputChipExample("Dismiss", {})
     }
 }
+
 @Composable
 fun InputChipExample(
-    text:String,
-    onDismiss:()->Unit
+    text: String,
+    onDismiss: () -> Unit
 ){
     var enabled by remember { mutableStateOf(true) }
     if(!enabled) return
 
     InputChip(
-        label={ Text(text) },
+        label = { Text(text)},
         selected = enabled,
-        onClick = {
-            onDismiss()
+        onClick = { onDismiss()
             enabled = !enabled
         },
-        avatar={
+        avatar = {
             Icon(
                 Icons.Filled.Person,
-                contentDescription="",
+                contentDescription = "",
                 Modifier.size(InputChipDefaults.AvatarSize)
             )
         },
-                trailingIcon= {
-                    Icon(
-                        Icons.Filled.Person,
-                        contentDescription = "",
-                        Modifier.size(InputChipDefaults.AvatarSize)
-
-                    )
-                }
-    )
-                }
-
-        @Composable
-        fun Progress() {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier
-                    .fillMaxSize()
+        trailingIcon = {
+            Icon(
+                Icons.Filled.Close,
+                contentDescription = "",
+                Modifier.size(InputChipDefaults.AvatarSize)
             )
-            {
-                LinearProgressIndicator(
-                    modifier = Modifier.fillMaxWidth()
-                )
-                CircularProgressIndicator(
-                    modifier = Modifier.width(64.dp)
-                )
-            }
         }
+    )
+}
+
+@Composable
+fun Progress() {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceEvenly,
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        LinearProgressIndicator(
+            modifier = Modifier.fillMaxWidth()
+        )
+        CircularProgressIndicator(
+            modifier = Modifier.width(64.dp)
+        )
+    }
+}
 
 @Composable
 fun Sliders() {
@@ -501,19 +342,19 @@ fun Sliders() {
         verticalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
             .fillMaxSize()
-    ){
-        var sliderPosition by remember { mutableStateOf(50f) }
+    ) {
+        var sliderPosition by remember { mutableStateOf(50f)}
         Column {
             Slider(
                 value = sliderPosition,
-                onValueChange ={sliderPosition= it},
+                onValueChange = {sliderPosition = it},
                 steps = 10,
                 valueRange = 0f..100f
             )
             Text(
-                textAlign =TextAlign.Center,
-                modifier= Modifier.fillMaxWidth(),
-                text =sliderPosition.toString()
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth(),
+                text = sliderPosition.toString()
             )
         }
     }
@@ -526,7 +367,7 @@ fun Switches() {
         verticalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
             .fillMaxSize()
-    ){
+    ) {
         var checked by remember { mutableStateOf(true) }
         Switch(
             checked = checked,
@@ -536,29 +377,30 @@ fun Switches() {
         )
         var checked2 by remember { mutableStateOf(true) }
         Switch(
-            checked = checked,
+            checked = checked2,
             onCheckedChange = {
-                checked = it
+                checked2 = it
             },
             thumbContent = if (checked2){
                 {
                     Icon(
                         Icons.Filled.Check,
-                        contentDescription="",
+                        contentDescription = "",
                         Modifier.size(InputChipDefaults.AvatarSize)
                     )
                 }
-                } else{
-                    null
-                }
-            )
+            } else {
+                null
+            }
+        )
         var checked3 by remember { mutableStateOf(true) }
         Checkbox(
             checked = checked3,
-            onCheckedChange = {checked3=it}
+            onCheckedChange = {checked3 = it}
         )
     }
 }
+
 @Composable
 fun Badges() {
     Column(
@@ -566,32 +408,33 @@ fun Badges() {
         verticalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
             .fillMaxSize()
-    ){
-      var itemCount by remember { mutableStateOf(0) }
-          BadgedBox(
-              badge = {
-                  if (itemCount > 0) {
-                      Badge(
-                          containerColor = Color.Red,
-                          contentColor = Color.White
-                      ){
-                         Text("itemCount")
-                      }
-                   }
-              }
-          ) {
-              Icon(
-                  imageVector = Icons.Filled.ShoppingCart,
-                  contentDescription=""
-              )
-          }
-        Button(
-            onClick ={ itemCount++}
-        ){
-            Text("add item")
+    ) {
+        var itemCount by remember { mutableStateOf(0)}
+
+        BadgedBox(
+            badge = {
+                if (itemCount > 0) {
+                    Badge(
+                        containerColor = Color.Red,
+                        contentColor = Color.White
+                    ) {
+                        Text("$itemCount")
+                    }
+                }
+            }
+        ) {
+            Icon(
+                imageVector = Icons.Filled.ShoppingCart,
+                contentDescription = ""
+            )
         }
-      }
+        Button(
+            onClick = { itemCount++ }
+        ){
+            Text("Add item")
+        }
     }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -656,8 +499,6 @@ fun convertMillisToDate(millis: Long): String {
     val formatter = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
     return formatter.format(Date(millis))
 }
-
-
 
 @Composable
 fun TimePickers() {
@@ -741,15 +582,18 @@ fun SnackBars() {
         modifier = Modifier
             .fillMaxSize()
     ) {
-        val snackState= remember { SnackbarHostState() }
+        val snackState = remember { SnackbarHostState() }
         val snackScope = rememberCoroutineScope()
-                SnackbarHost(hostState = snackState, Modifier)
 
-        fun launchSnackBar(){
-            snackScope.launch { snackState.showSnackbar("the message was sent") }
+        SnackbarHost(hostState = snackState, Modifier)
+
+        fun launchSnackBar() {
+            snackScope.launch { snackState.showSnackbar("The message was sent") }
         }
+
         Button(::launchSnackBar) {
-            Text("show Snackbar")
+            Text("Show Snackbar")
+
         }
     }
 }
@@ -763,164 +607,216 @@ fun AlertDialogs() {
             .fillMaxSize()
     ) {
         var showAlertDialog by remember { mutableStateOf(false) }
-        var selecteOption by remember { mutableStateOf("") }
+        var selectedOption by remember { mutableStateOf("") }
 
-        if (showAlertDialog){
+        if (showAlertDialog) {
             AlertDialog(
-                icon = { Icon(Icons.Filled.Warning, contentDescription = "") },
-                title ={ Text(text = "confirm deletion") },
-                text ={ Text(text = "Are you sure you want to delete the file") },
-             onDismissRequest={},
-                confirmButton={
+                icon = { Icon(Icons.Filled.Warning, contentDescription = "")},
+                title = { Text(text = "Confirm deletion")},
+                text = { Text(text = "Are you sure you want to delete the file?")},
+                onDismissRequest = {},
+                confirmButton = {
                     TextButton(
-                        onClick={
-                            selecteOption="Confirm"
-                            showAlertDialog=false
-                        }
-                    ) {Text(text = "Confirm") }
-                },
-                dismissButton ={
-                    TextButton (
                         onClick = {
-                            selecteOption="Dismiss"
-                            showAlertDialog=false
+                            selectedOption = "Confirm"
+                            showAlertDialog = false
                         }
-                    ){ Text(text = "Dismiss") }
-                }
+                    ) { Text(text = "Confirm") }
+                },
+                dismissButton = {
+                    TextButton(
+                        onClick = {
+                            selectedOption = "Dismiss"
+                            showAlertDialog = false
+                        }
+                    ) { Text(text = "Dismiss") }
+                },
             )
         }
-        Text(selecteOption)
-        Button(onClick = {showAlertDialog= true}){
-            Text("show alert dialog")
-        }
-    }
-    }
-@Preview(showBackground = true)
-@Composable
-fun Bars(){
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(Color.DarkGray)
-    ){
-    Row (
-        modifier = Modifier
-            .align(Alignment.TopCenter)
-            .fillMaxWidth()
-            .background(Color.Black)
-            .padding(10.dp, 50.dp, 10.dp, 10.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
-    )
-    {
-        Icon(Icons.Filled.Menu, contentDescription = "", tint = Color.White)
-        Text(
-            text = "App title",
-            color = Color.White,
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp
-            )
 
-        Icon(Icons.Filled.Settings, contentDescription = "", tint = Color.White)
+        Text(selectedOption)
+        Button(onClick = {showAlertDialog = true}) {
+            Text("Show alert dialog")
+        }
     }
-        var post= arrayOf(
-            PostModel(1,"Tittle 1","Text 1"),
-            PostModel(2,"Tittle 2","Text 2"),
-            PostModel(3,"Tittle 3","Text 3"),
-            PostModel(4,"Tittle 4","Text 4")
-        )
-        Column(
+}
+
+@Composable
+private fun Bars() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.DarkGray)
+    ) {
+        Row (
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .padding(10.dp,90.dp,10.dp,50.dp)
-                .fillMaxSize()
-
+                .fillMaxWidth()
+                .background(Color.Black)
+                .padding(10.dp, 50.dp, 10.dp, 10.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
         )
         {
-            Post(post)
+            Icon(Icons.Filled.Menu, contentDescription = "", tint = Color.White)
+            Text(
+                text ="App Title",
+                color = Color.White,
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp
+            )
+            Icon(Icons.Filled.Settings, contentDescription = "", tint = Color.White)
         }
-
-
+        val post = arrayOf(
+            PostModel(1,"Title 1","Text 1",painterResource(R.drawable.android)),
+            PostModel(2,"Title 2","Text 2",painterResource(R.drawable.android)),
+            PostModel(3,"Title 3","Text 3",painterResource(R.drawable.android)),
+            PostModel(4,"Title 4","Text 4",painterResource(R.drawable.android)),
+            PostModel(5,"Title 5","Text 5",painterResource(R.drawable.android)),
+            PostModel(6,"Title 6","Text 6",painterResource(R.drawable.android)),
+            PostModel(7,"Title 7","Text 7",painterResource(R.drawable.android)),
+            PostModel(8,"Title 8","Text 8",painterResource(R.drawable.android)),
+            PostModel(9,"Title 9","Text 9",painterResource(R.drawable.android)),
+            PostModel(10,"Title 10","Text 10",painterResource(R.drawable.android)),
+        )
+        Column (
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(10.dp, 90.dp, 10.dp, 50.dp)
+                .fillMaxSize()
+        )
+        {
+            //Posts(post)
+            //PostCard(1,"This is a card title", "This is a card text", painterResource(R.drawable.descargar))
+            PostGrid(post)
+        }
         Row(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()
                 .height(65.dp)
                 .background(Color.Black)
-                .padding(2.dp,5.dp),
+                .padding(2.dp, 5.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ){
-         Column {
-             IconButton(onClick = {}, Modifier.size(30.dp)) {
-                 Icon(
-                     Icons.Outlined.Home,
-                     contentDescription = "",
-                     tint = Color.White,
-                     modifier = Modifier.fillMaxSize()
-                     )
-             }
-             Text(text = "Home", color = Color.White)
-         }
             Column {
                 IconButton(onClick = {}, Modifier.size(30.dp)) {
-                    Icon(
-                        Icons.Outlined.Person,
+                    Icon(Icons.Outlined.Home,
                         contentDescription = "",
                         tint = Color.White,
                         modifier = Modifier.fillMaxSize()
                     )
                 }
-                Text(text = "Login", color = Color.White)
+                Text(text = "Home", color = Color.White)
             }
             Column {
                 IconButton(onClick = {}, Modifier.size(30.dp)) {
-                    Icon(
-                        Icons.Outlined.Call,
+                    Icon(Icons.Outlined.Search,
                         contentDescription = "",
                         tint = Color.White,
                         modifier = Modifier.fillMaxSize()
                     )
                 }
-                Text(text = "call", color = Color.White)
+                Text(text = "Search", color = Color.White)
             }
             Column {
                 IconButton(onClick = {}, Modifier.size(30.dp)) {
-                    Icon(
-                        Icons.Outlined.Build,
+                    Icon(Icons.Outlined.Person,
                         contentDescription = "",
                         tint = Color.White,
                         modifier = Modifier.fillMaxSize()
                     )
                 }
-                Text(text = "Tools", color = Color.White)
+                Text(text = "Profile", color = Color.White)
             }
             Column {
                 IconButton(onClick = {}, Modifier.size(30.dp)) {
-                    Icon(
-                        Icons.Outlined.Email,
+                    Icon(Icons.Outlined.Notifications,
                         contentDescription = "",
                         tint = Color.White,
                         modifier = Modifier.fillMaxSize()
                     )
                 }
-                Text(text = "Mail", color = Color.White)
+                Text(text = "Alerts", color = Color.White)
+            }
+            Column {
+                IconButton(onClick = {}, Modifier.size(30.dp)) {
+                    Icon(Icons.Outlined.Call,
+                        contentDescription = "",
+                        tint = Color.White,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+                Text(text = "Contact", color = Color.White)
             }
         }
     }
 }
 
 @Composable
-fun Post(arrayPosts:Array<PostModel>){
+fun Posts(arrayPosts:Array<PostModel>, adaptive:String){
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-    ){
-        items(arrayPosts) { post->
-            Text(
-                text = post.text,
-                color = Color.White,
-                fontSize = 16.sp
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            HorizontalDivider(thickness =2.dp)
+    ) {
+        items(arrayPosts){ post->
+            when(adaptive) {
+                "PhoneP" -> {
+                    PostCardCompact(post.id, post.title, post.title, post.image)
+                }
+                "PhoneL" -> {
+                    PostCard(post.id, post.title, post.title, post.image)
+                }
+            }
         }
+    }
+}
+
+@Composable
+fun PostGrid(arrayPosts:Array<PostModel>) {
+    LazyVerticalGrid(
+        columns = GridCells.Adaptive(minSize = 128.dp),
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        items(arrayPosts){ post->
+            PostCard(post.id, post.title, post.title, post.image)
+        }
+    }
+}
+
+@Preview(showBackground = true, device ="spec:id=reference_tablet,shape=Normal,width=1280,height=800,unit=dp,dpi=240")
+@Composable
+fun Adaptive() {
+    var WindowsSize = currentWindowAdaptiveInfo().windowSizeClass
+    var height = currentWindowAdaptiveInfo().windowSizeClass.windowHeightSizeClass
+    var width = currentWindowAdaptiveInfo().windowSizeClass.windowWidthSizeClass
+
+    // Compact width < 600dp Phone portrait
+    // Medium width >= 600dp < 840dp Tablets portrait
+    // Expanded width >840dp Tablet landscape
+
+    // Compact height < 480dp Phone landscape
+    // Medium height >= 480dp < 900dp Tablet landscape or Phone portrait
+    // Expanded height >900dp Tablet in portrait
+
+    val post = arrayOf(
+        PostModel(1, "Title 1", "Text 1", painterResource(R.drawable.android)),
+        PostModel(2, "Title 2", "Text 2", painterResource(R.drawable.android)),
+        PostModel(3, "Title 3", "Text 3", painterResource(R.drawable.android)),
+        PostModel(4, "Title 4", "Text 4", painterResource(R.drawable.android)),
+        PostModel(5, "Title 5", "Text 5", painterResource(R.drawable.android)),
+        PostModel(6, "Title 6", "Text 6", painterResource(R.drawable.android)),
+        PostModel(7, "Title 7", "Text 7", painterResource(R.drawable.android)),
+        PostModel(8, "Title 8", "Text 8", painterResource(R.drawable.android)),
+        PostModel(9, "Title 9", "Text 9", painterResource(R.drawable.android)),
+        PostModel(10, "Title 10", "Text 10", painterResource(R.drawable.android)),
+    )
+    if (width == WindowWidthSizeClass.COMPACT) {
+        Posts(post, "PhoneP")
+    } else if (height == WindowHeightSizeClass.COMPACT) {
+        Posts(post, "PhoneL")
+    } else {
+        Posts(post, "PhoneL")
+        //Text(text = WindowsSize.toString())
     }
 }
