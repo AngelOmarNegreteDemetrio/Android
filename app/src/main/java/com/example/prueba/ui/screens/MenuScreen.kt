@@ -69,6 +69,10 @@ fun MenuScreen(navController: NavController) {
         Button(onClick = {navController.navigate("wifidatos")}) {
             Text("Go to Wifi-Datos")
         }
+        Text(text = "Test-App")
+        Button(onClick = {navController.navigate("home")}) {
+            Text("HomeScreen")
+        }
 
     }
 }
