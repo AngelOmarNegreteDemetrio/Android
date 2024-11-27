@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -60,6 +61,8 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.biometric.ktx)
+    implementation(libs.androidx.room.common)
+    implementation(libs.androidx.room.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -137,4 +140,6 @@ dependencies {
 // AsyncLayoutInflater para AppCompat
     implementation("androidx.appcompat:appcompat:1.6.1")
 
+    val room_version= "2.6.1"
+    ksp("androidx.room:room-compiler:$room_version")
 }

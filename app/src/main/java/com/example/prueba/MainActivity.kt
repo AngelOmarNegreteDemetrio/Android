@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.wifi.WifiManager
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -18,6 +19,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.prueba.database.AppDatabase
+import com.example.prueba.database.DatabaseProvider
 import com.example.prueba.ui.screens.BiometricsScreen
 import com.example.prueba.ui.screens.CameraScreen
 import com.example.prueba.ui.screens.ComponentsScreen
@@ -30,11 +33,17 @@ import com.example.prueba.ui.screens.MenuScreen
 import com.example.prueba.ui.screens.SegundoPlanoScreen
 import com.example.prueba.ui.screens.WifiDatosScreen
 
-//import androidx.navigation.compose.NavHostController
 
 class MainActivity : FragmentActivity() {
+    lateinit var database: AppDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        try {
+            database = DatabaseProvider.getDatabase(this)
+            Log.d("DBX", "Database loaded succesfully")
+        } catch (exception: Exception) {
+            Log.d("DBX", "error: $exception")
+        }
         enableEdgeToEdge()//abarca el 100% de la pantalla
         setContent {
             ComposeMultiScreenApp()
@@ -337,10 +346,11 @@ fun SetupNavGraph(navController: NavHostController) {
                 wifiManager = LocalContext.current.getSystemService(Context.WIFI_SERVICE) as WifiManager,
                 connectivityManager = LocalContext.current.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager,
                 context = LocalContext.current as ComponentActivity
-            )}
-            composable(route = "manage-service/{serviceId}") { backStackEntry ->
-                val serviceId = backStackEntry.arguments?.getString("serviceId")
-                ManageServiceScreen(navController, serviceId = serviceId)
-            }
+            )
+        }
+        composable(route = "manage-service/{serviceId}") { backStackEntry ->
+            val serviceId = backStackEntry.arguments?.getString("serviceId")
+            ManageServiceScreen(navController, serviceId = serviceId)
         }
     }
+}
